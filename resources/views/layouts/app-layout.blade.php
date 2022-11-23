@@ -44,7 +44,15 @@
 
         @include('components.notification-panel')
     </div>
+
     <!-- .wrapper -->
+
+
+
+
+
+
+
     @livewireScripts()
     <script src="{{ asset('js/jquery.min.js')}}"></script>
     <script src="{{ asset('js/popper.min.js')}}"></script>
@@ -54,7 +62,7 @@
     <script src="{{ asset('js/daterangepicker.js')}}"></script>
     <script src="{{ asset('js/jquery.stickOnScroll.js')}}"></script>
     <script src="{{ asset('js/tinycolor-min.js')}}"></script>
-    {{-- <script src="{{ asset('js/config.js')}}"></script> --}}
+    <script src="{{ asset('js/config.js')}}"></script>
     <script src="{{ asset('js/d3.min.js')}}"></script>
     <script src="{{ asset('js/topojson.min.js')}}"></script>
     <script src="{{ asset('js/datamaps.all.min.js')}}"></script>
@@ -79,6 +87,21 @@
         gtag('js', new Date());
         gtag('config', 'UA-56159088-1');
     </script>
+
+    <script>
+        window.addEventListener('show-form',event=>{
+        $('#basic-modal').modal('show');
+        console.log('masuk');
+})
+
+window.addEventListener('hide-form',event=>{
+    // console.log('outw');
+    $('#basic-modal').modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+})
+    </script>
+
     @stack('scripts')
 </body>
 

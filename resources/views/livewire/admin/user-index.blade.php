@@ -3,7 +3,7 @@
         <div class="col-md-8 d-flex justify-content-start p-0">
             <div class="form-group col-md-3 p-0 mr-1">
                 <select wire:model="divisi" class="form-control">
-                    <option value="0">Show All</option>
+                    <option value='0'>Show All</option>
                     @foreach ( $divisions as $division )
                     <option value="{{ $division->id }}">{{ $division->name }}</option>
                     @endforeach
@@ -11,7 +11,7 @@
 
             </div>
             <div class="form-group col-md-4 p-0">
-                <button type="button" class="btn mb-2 btn-light border rounded">
+                <button type="button" class="btn mb-2 btn-light border rounded" wire:click.prevent="addUser">
                     <x-heroicon-o-plus style="height: 15px" class="mr-1"></x-heroicon-o-plus>
                     Add Data User
                 </button>
@@ -57,9 +57,9 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->username }}</td>
                     <td>{{ @$user->division->name }}</td>
-                    <td>{{ $user->getRoleNames()[0] }}</td>
+                    <td>{{ @$user->getRoleNames()[0] }}</td>
                     <td class="text-center">
-                        <a type="button" href="" class="text-success mx-1">
+                        <a type="button" wire:click.prevent="getUser({{ $user->id }})" class="text-success mx-1">
                             <x-heroicon-s-pencil-square style="width:15px" />
                         </a>
                         |
@@ -67,7 +67,7 @@
                             <x-heroicon-s-key style="width:15px" />
                         </a>
                         |
-                        <a type="button" class="text-danger mx-1">
+                        <a type="button" wire:click.prevent="deleteUser({{ $user->id }})" class="text-danger mx-1">
                             <x-heroicon-s-trash style="width:15px " />
                         </a>
                     </td>
@@ -77,5 +77,18 @@
         </table>
         {{ $users->links() }}
     </div>
+
+    @if($modal == 'create')
+    <livewire:admin.create-user></livewire:admin.create-user>
+
+    @elseif($modal=='edit')
+    <livewire:admin.edit-user></livewire:admin.edit-user>
+
+    @elseif($modal=='delete')
+    <livewire:admin.delete-user></livewire:admin.delete-user>
+
+    @endif
+
+
 
 </div>
