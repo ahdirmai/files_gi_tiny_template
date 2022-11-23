@@ -92,13 +92,13 @@ class UserIndex extends Component
     public function handleStored(SweetAlertFactory $flasher)
     {
         $this->handleResetModal();
-        $flasher->addSuccess('You have successfully Added your User Data', '<h4> <b>  User Data Added</b></h4>');
+        $flasher->addSuccess('You have successfully Added User Data', '<h4> <b>  User Data Added</b></h4>');
     }
 
     public function handleUpdated(SweetAlertFactory $flasher)
     {
         $this->handleResetModal();
-        $flasher->addSuccess('You have successfully updated your profile data', '<h4> <b>  Profile Updated!</b></h4>');
+        $flasher->addSuccess('You have successfully updated User profile data', '<h4> <b>  Profile Updated!</b></h4>');
     }
 
     public function handleDeleted(SweetAlertFactory $flasher)
