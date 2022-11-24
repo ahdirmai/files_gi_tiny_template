@@ -1,14 +1,28 @@
 <div class="col-md-6 col-lg-4">
     <div class="card shadow mb-4">
-        <div class="card-body file-list">
+        <div class="card-body file-list p-2">
             <div class="d-flex align-items-center">
-                <div class="circle circle-md bg-secondary">
-                    <span class="fe fe-folder fe-16 text-white"></span>
+                <div class="d-flex align-items-center flex-column ml-2 mt-2">
+                    <div class="circle circle-md bg-secondary">
+                        <x-heroicon-o-folder-open style="height: 30px" class="text-white mx-auto">
+                        </x-heroicon-o-folder-open>
+                    </div>
+
+                    <div class="mt-2 font-weight-bold text-dark">
+                        <strong> Satu</strong>
+                    </div>
                 </div>
                 <div class="flex-fill ml-4 fname">
                     <strong>Components</strong><br />
-                    <span class="badge badge-light text-muted">3 files</span>
-                    <i class="fe fe-users fe-12 ml-2 text-muted"></i>
+                    {{-- <span class="badge badge-light text-muted">Nama</span> --}}
+
+                </div>
+                <div class="mr-2 mt-5">
+                    <strong>
+
+                        <x-heroicon-s-globe-americas style="width:15px" />
+                    </strong>
+
                 </div>
                 <div class="file-action">
                     <button type="button" class="btn btn-link dropdown-toggle more-vertical p-0 text-muted mx-auto"

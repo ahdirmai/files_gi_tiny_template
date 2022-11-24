@@ -63,7 +63,7 @@
                             <x-heroicon-s-pencil-square style="width:15px" />
                         </a>
                         |
-                        <a type="button" href="" class="text-primary mx-1">
+                        <a type="button" wire:click.prevent="resetPassword({{ $user->id }})" class="text-primary mx-1">
                             <x-heroicon-s-key style="width:15px" />
                         </a>
                         |
@@ -86,6 +86,9 @@
 
     @elseif($modal=='delete')
     <livewire:admin.delete-user></livewire:admin.delete-user>
+
+    @elseif ($modal='reset')
+    <livewire:admin.reset-password></livewire:admin.reset-password>
 
     @endif
 

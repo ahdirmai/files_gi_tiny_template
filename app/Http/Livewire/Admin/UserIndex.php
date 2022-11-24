@@ -21,7 +21,8 @@ class UserIndex extends Component
         'resetModal' => 'handleResetModal',
         'userStored' => 'handleStored',
         'userUpdated' => 'handleUpdated',
-        'userDeleted' => 'handleDeleted'
+        'userDeleted' => 'handleDeleted',
+        'passwordReseted' => 'handleReset'
 
     ];
 
@@ -69,6 +70,13 @@ class UserIndex extends Component
         $this->emit('destroy', $id);
     }
 
+    public function resetPassword($id)
+    {
+        $this->modal = "reset";
+        $this->dispatchBrowserEvent('show-form');
+        $this->emit('reset', $id);
+    }
+
     // public function getUserDelete($id)
     // {
     //     $this->deleteUser();
@@ -105,6 +113,12 @@ class UserIndex extends Component
     {
         $this->handleResetModal();
         $flasher->addSuccess('You have successfully Delete the User', '<h4> <b>  User Deleted</b></h4>');
+    }
+
+    public function handleReset(SweetAlertFactory $flasher)
+    {
+        $this->handleResetModal();
+        $flasher->addSuccess('You have successfully Reset user password', '<h4> <b>  Password Reset!</b></h4>');
     }
 
 

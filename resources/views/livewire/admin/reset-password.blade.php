@@ -1,7 +1,7 @@
 <x-modal.basic-modal>
     <x-slot name="header">
         <h5 class="modal-title">
-            Delete Profile
+            Reset User password
         </h5>
 
         <button type="button" wire:click="resetModal" class="close" data-dismiss="modal" aria-label="Close">
@@ -10,12 +10,12 @@
     </x-slot>
 
     <x-slot name="content">
-        Are you sure delete the entire data?
+        Are you sure to Reset the password?
     </x-slot>
 
     <x-slot name="footer">
         <button type="button" class="btn text-primary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" wire:click="delete()">Delete</button>
+        <button type="button" class="btn btn-primary" wire:click="resetPassword()">Reset</button>
     </x-slot>
 
 </x-modal.basic-modal>
