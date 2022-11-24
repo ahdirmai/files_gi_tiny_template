@@ -44,12 +44,14 @@
                     <span class="ml-3 item-text">Trash</span>
                 </a>
             </li>
+            @role('admin')
             <li class="nav-item w-100 mb-3 {{ $page =='manage-user'?'active':'' }} ">
                 <a class="nav-link" href="{{ route('manageusers.index') }}">
                     <x-heroicon-o-user-group style="max-height: 20px" />
                     <span class="ml-3 item-text">Manage User</span>
                 </a>
             </li>
+            @endrole
         </ul>
     </nav>
 

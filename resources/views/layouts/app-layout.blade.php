@@ -30,7 +30,8 @@
 <body class="vertical light  ">
     <div class="wrapper">
         {{-- Header --}}
-        @include('components.layout.header');
+        {{-- @include('components.layout.header'); --}}
+        <livewire:component.header></livewire:component.header>
         {{-- End Header --}}
 
         {{-- SideBar --}}
@@ -44,6 +45,8 @@
 
         @include('components.notification-panel')
     </div>
+
+
 
     <!-- .wrapper -->
 
@@ -103,6 +106,10 @@ window.addEventListener('hide-form',event=>{
     </script>
 
     @stack('scripts')
+
+
+
+
 </body>
 
 </html>
