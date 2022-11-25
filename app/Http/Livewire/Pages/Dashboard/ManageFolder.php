@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pages\Dashboard;
 
 use App\Models\BaseFolders;
+use App\Models\Content;
 use Livewire\Component;
 
 class ManageFolder extends Component
@@ -20,8 +21,6 @@ class ManageFolder extends Component
 
     public function showFolderManage($folder)
     {
-        // dd($folder['slug']);
-        // $folder = BaseFolders::where('slug', $slug)->first();
         $this->slug = $folder['slug'];
         $this->name = $folder['name'];
         $this->folderAccessType = $folder['access_type'];
@@ -33,7 +32,12 @@ class ManageFolder extends Component
             'folderAccessType' => 'required'
         ]);
 
-        $folder = BaseFolders::where('slug', $this->slug);
+        $folder = BaseFolders::where('slug', $this->slug)->first();
+        if (!$folder) {
+            $folder = Content::where('slug', $this->slug)->first();
+        }
+
+        // dd($folder);
 
         $done = $folder->update([
             'access_type' => $this->folderAccessType
@@ -43,7 +47,6 @@ class ManageFolder extends Component
             $this->resetModal();
             $this->emit('storeFolderManage');
         }
-        // dd('masuk');
     }
 
 

@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\ManageUsersController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TrashController;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use Spatie\Permission\Contracts\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,29 +25,25 @@ Route::get('/', function () {
 
 Route::redirect('/home', '/dashboard');
 Route::redirect('/', '/dashboard');
+
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
+Route::get('/folders/{slug}', [DashboardController::class, 'innerFolder'])->name('dashboard.inner');
+
+
+
 Route::get('/trash', [TrashController::class, 'index'])->name('trash');
 
-// Route::middleware('auth')->get('/dashboard', function () {
-//     return view('pages.dashboard.index', $data = [
+
+
+// Route::middleware('auth')->get('/folders/test', function () {
+//     return view('pages.dashboard.inner-folder.index', $data = [
 //         'page' => 'dashboard'
 //     ]);
-// })->name('dashboard');
+// })->name('dashboard.inner');
 
 
-Route::middleware('auth')->get('/folders/test', function () {
-    return view('pages.dashboard.inner-folder.index', $data = [
-        'page' => 'dashboard'
-    ]);
-})->name('dashboard.inner');
-
-
-
-// Route::middleware('auth')->get('/trash', function () {
-//     return view('pages.trash.index', $data = [
-//         'page' => 'trash'
-//     ]);
-// })->name('trash');
 
 Route::middleware('auth')->get('/trash/test', function () {
     return view('pages.trash.inner-folder.index', $data = [
@@ -70,6 +68,7 @@ Route::middleware('auth')->get('/shared/test', function () {
 Route::controller(ManageUsersController::class)->prefix('admin/users')->middleware('role:admin', 'auth')->group(function () {
     Route::get('', 'index')->name('manageusers.index');
 });
+
 
 
 Auth::routes();

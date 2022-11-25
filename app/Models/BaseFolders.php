@@ -20,4 +20,9 @@ class BaseFolders extends Model
     {
         return $this->belongsTo(User::class, 'owner_id', 'id');
     }
+
+    public function accesses()
+    {
+        return $this->morphMany('App\Models\Access', 'accessable');
+    }
 }

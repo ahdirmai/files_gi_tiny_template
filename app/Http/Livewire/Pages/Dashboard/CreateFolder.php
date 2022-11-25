@@ -3,13 +3,14 @@
 namespace App\Http\Livewire\Pages\Dashboard;
 
 use App\Models\BaseFolders;
+use App\Models\Content;
 use Livewire\Component;
 use Illuminate\Support\Str;
 
 
 class CreateFolder extends Component
 {
-    public $name, $folderAccessType = "public";
+    public $name, $folderAccessType = "public", $slug = "";
 
     public function render()
     {
@@ -23,26 +24,50 @@ class CreateFolder extends Component
         $this->emit('resetModal');
     }
 
-    public function createFolder()
+    public function createFolder($slug)
     {
-        // dd($this->folderAccessType);
         $this->validate([
             'name' => 'required|min:3',
             'folderAccessType' => 'required'
         ]);
 
+        if ($slug) {
+            $parent = BaseFolders::where('slug', $slug)->first();
+            if (!$parent) {
+                $parent = Content::where('slug', $slug)->first();
+                $baseFolder_id = $parent->basefolder_id;
+            } else {
+                $baseFolder_id = $parent->id;
+            }
+
+            $content = new Content();
+            $content->name = $this->name;
+            $content->type = 'folder';
+            $content->owner_id = auth()->user()->id;
+            $content->slug = Str::random(32);
+            $content->basefolder_id = $baseFolder_id;
+            $content->access_type = $this->folderAccessType;
+            $doneCreate = $parent->contents()->save($content);
+            if ($doneCreate) {
+                $this->resetModal();
+                $this->emit('folderStored');
+            }
+        } else {
+            $folder = BaseFolders::create([
+                'name' => $this->name,
+                'owner_id' => auth()->user()->id,
+                'access_type' => $this->folderAccessType,
+                'slug' => Str::random(32)
+            ]);
+            if ($folder) {
+                $this->resetModal();
+                $this->emit('folderStored');
+            };
+        };
+
 
 
         // dd($this->name);
-        $folder = BaseFolders::create([
-            'name' => $this->name,
-            'owner_id' => auth()->user()->id,
-            'access_type' => $this->folderAccessType,
-            'slug' => Str::random(32)
-        ]);
-        if ($folder) {
-            $this->resetModal();
-            $this->emit('folderStored');
-        };
+
     }
 }

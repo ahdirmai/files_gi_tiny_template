@@ -38,8 +38,6 @@
 
     @elseif($modal =="delete")
     <livewire:pages.dashboard.delete-folder></livewire:pages.dashboard.delete-folder>
-
-
     @endif
 
 </div>

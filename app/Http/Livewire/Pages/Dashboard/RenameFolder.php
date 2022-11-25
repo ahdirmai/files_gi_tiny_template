@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pages\Dashboard;
 
 use App\Models\BaseFolders;
+use App\Models\Content;
 use Livewire\Component;
 
 class RenameFolder extends Component
@@ -25,7 +26,10 @@ class RenameFolder extends Component
 
     public function renameFolder()
     {
-        $folder = BaseFolders::where('slug', $this->slug);
+        $folder = BaseFolders::where('slug', $this->slug)->first();
+        if (!$folder) {
+            $folder = Content::where('slug', $this->slug)->first();
+        };
         $this->validate([
             'name' => 'required|min:3',
         ]);
@@ -33,6 +37,7 @@ class RenameFolder extends Component
         $done = $folder->update([
             'name' => $this->name,
         ]);
+
         if ($done) {
             $this->resetModal();
             $this->emit('folderRenamed');

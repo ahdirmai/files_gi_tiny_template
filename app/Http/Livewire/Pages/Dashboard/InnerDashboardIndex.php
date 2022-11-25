@@ -3,34 +3,17 @@
 namespace App\Http\Livewire\Pages\Dashboard;
 
 use App\Models\BaseFolders;
+use App\Models\Content;
 use Flasher\SweetAlert\Prime\SweetAlertFactory;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class DashboardIndex extends Component
+class InnerDashboardIndex extends Component
 {
 
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
-    public $search;
-    public $modal = "";
-    public $ContainerDetailStatus = "";
-    public $FolderSelected = "";
-    // public $page = 'dashboard';
-
-    protected $queryString = [
-        'search'
-    ];
-
-    public function mount()
-    {
-        $this->search = request()->query('search', $this->search);
-    }
-
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
+    public $slug, $modal;
 
     protected $listeners = [
         'resetModal' => 'handleResetModal',
@@ -39,6 +22,21 @@ class DashboardIndex extends Component
         'storeFolderManage' => 'handleManaged',
         'folderDeleted' => 'handleFolderDeleted'
     ];
+
+    public function render()
+    {
+        $parent = BaseFolders::where('slug', $this->slug)->first();
+        if (!$parent) {
+            $parent = Content::where('slug', $this->slug)->first();
+        }
+        $folders = $parent->contents();
+
+        $data = [
+            'content' => $folders->latest()->paginate(6, '*', 'folderPage'),
+            'folder' => $parent,
+        ];
+        return view('livewire..pages.dashboard.inner-dashboard-index', $data);
+    }
 
     public function createFolder()
     {
@@ -65,26 +63,32 @@ class DashboardIndex extends Component
     }
 
 
-    public function getRename($slug)
-    {
-        $folder = BaseFolders::where('slug', $slug)->first();
-        $this->emit('setFolderName', $folder);
-        $this->renameFolder();
-    }
-
-
-    public function getManage($slug)
-    {
-        // dd('Masuk');
-        $folder = BaseFolders::where('slug', $slug)->first();
-        $this->emit('setFolderManage', $folder);
-        $this->manageFolder();
-    }
-
     public function getDetail($slug)
     {
         $this->dispatchBrowserEvent('show-side');
         $this->emit('setDetailFolder', $slug);
+    }
+
+    public function getRename($slug)
+    {
+        $folder = BaseFolders::where('slug', $slug)->first();
+
+        if (!$folder) {
+            $folder = Content::where('slug', $slug)->first();
+        }
+        $this->emit('setFolderName', $folder);
+        $this->renameFolder();
+    }
+
+    public function getManage($slug)
+    {
+        $folder = BaseFolders::where('slug', $slug)->first();
+
+        if (!$folder) {
+            $folder = Content::where('slug', $slug)->first();
+        }
+        $this->emit('setFolderManage', $folder);
+        $this->manageFolder();
     }
 
     public function getDelete($slug)
@@ -121,18 +125,5 @@ class DashboardIndex extends Component
     {
         $this->handleResetModal();
         $flasher->addSuccess('You have successfully Delete your Folder', '<h4> <b> Folder Deleted!</b></h4>');
-    }
-
-    public function render()
-    {
-        if ($this->search) {
-            $baseFolders = BaseFolders::where('name', 'like', '%' . $this->search . '%')->latest();
-        } else {
-            $baseFolders = BaseFolders::latest();
-        }
-        $data = [
-            'baseFolders' => $baseFolders->paginate(6)
-        ];
-        return view('livewire.pages.dashboard.dashboard-index', $data);
     }
 }

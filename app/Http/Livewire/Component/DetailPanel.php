@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Component;
 
 use App\Models\BaseFolders;
+use App\Models\Content;
 use Livewire\Component;
 
 class DetailPanel extends Component
@@ -20,6 +21,10 @@ class DetailPanel extends Component
     public function showDetailFolder($slug)
     {
         $folders = BaseFolders::where('slug', $slug)->first();
+
+        if (!$folders) {
+            $folders = Content::where('slug', $slug)->first();
+        };
         $this->name = $folders->name;
         $this->owner = $folders->user->name;
         $this->access_type = $folders->access_type;

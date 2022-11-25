@@ -1,7 +1,7 @@
 <x-modal.basic-modal>
     <x-slot name="header">
         <h5 class="modal-title">
-            New Folder
+            New Folder {{ $slug }}
         </h5>
         <button type="button" wire:click="resetModal" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -74,7 +74,7 @@
 
         <x-slot name="footer">
             <button type="button" class="btn text-primary" data-dismiss="modal">Close</button>
-            <button type="submit" wire:click="createFolder()" class="btn btn-primary">Create</button>
+            <button type="submit" wire:click="createFolder('{{ $slug }}')" class="btn btn-primary">Create</button>
         </x-slot>
     </form>
 

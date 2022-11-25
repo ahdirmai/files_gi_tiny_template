@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pages\Dashboard;
 
 use App\Models\BaseFolders;
+use App\Models\Content;
 use Livewire\Component;
 
 class DeleteFolder extends Component
@@ -30,7 +31,11 @@ class DeleteFolder extends Component
 
     public function deleteFolder()
     {
-        $folder = BaseFolders::where('slug', $this->slug);
+        $folder = BaseFolders::where('slug', $this->slug)->first();
+
+        if (!$folder) {
+            $folder = Content::where('slug', $this->slug)->first();
+        }
         // $this->username = $user->name;
         // $user->delete();
 

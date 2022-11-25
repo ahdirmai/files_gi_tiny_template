@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div class="flex-fill ml-4 fname">
-                    <a href="{{ route('dashboard.inner') }}">
+                    <a href="{{ route('dashboard.inner',$folder->slug) }}">
                         <strong> {{ $folder->name }}</strong><br />
                         {{-- <span class="badge badge-light text-muted">Nama</span> --}}
                     </a>
