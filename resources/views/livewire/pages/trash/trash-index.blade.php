@@ -21,10 +21,8 @@
             </div>
             {{ $baseFolders->links() }}
         </div>
-        {{-- <x-modal.side-modal></x-modal.side-modal> --}}
-        <livewire:component.detail-panel></livewire:component.detail-panel>
 
-        {{-- <livewire:component.detail-panel></livewire:component.detail-panel> --}}
+        <livewire:component.detail-panel></livewire:component.detail-panel>
     </div>
 
     @if($modal =="create")

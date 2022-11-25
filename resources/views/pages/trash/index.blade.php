@@ -24,21 +24,7 @@
                     </div>
                 </div>
                 <hr>
-                <div class="form-row">
-                    <x-search-bar></x-search-bar>
-                </div>
-
-                <div class="file-container">
-                    <div class="file-panel mt-4">
-                        <h6 class="mb-3">Base Folder</h6>
-                        <div class="row my-4">
-                            <x-folder></x-folder>
-                        </div>
-                    </div>
-                    {{-- content Detail Sidebar --}}
-                    <x-detail-panel></x-detail-panel>
-                    {{-- End Content Detail Sidebar --}}
-                </div>
+                <livewire:pages.trash.trash-index></livewire:pages.trash.trash-index>
             </div>
         </div>
     </div>

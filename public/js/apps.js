@@ -20,18 +20,18 @@ $("#modeSwitcher").on("click", function(e) {
         $(this).find("li.dropdown").removeClass("show open"), $(this).find("ul.dropdown-menu").removeClass("show open")
     }),
 
-    $(".file-panel .card").on("click", function() {
-        $(this).hasClass("selected") ? ($(this).removeClass("selected"), $(this).find("bg-light").removeClass("shadow-lg"),
-            $(".file-container").removeClass("collapsed")) : ($(this).addClass("selected"),
-            $(this).addClass("shadow-lg"),
-            $(".file-panel .card").not(this).removeClass("selected"),
-            $(".file-container").addClass("collapsed"))
-    }),
-    $(".close-info").on("click",
-        function() {
-            $(".file-container").hasClass("collapsed") && ($(".file-container").removeClass("collapsed"),
-                $(".file-panel").find(".selected").removeClass("selected"))
-        }),
+    // $(".file-panel .card").on("click", function() {
+    //     $(this).hasClass("selected") ? ($(this).removeClass("selected"), $(this).find("bg-light").removeClass("shadow-lg"),
+    //         $(".file-container").removeClass("collapsed")) : ($(this).addClass("selected"),
+    //         $(this).addClass("shadow-lg"),
+    //         $(".file-panel .card").not(this).removeClass("selected"),
+    //         $(".file-container").addClass("collapsed"))
+    // }),
+    // $(".close-info").on("click",
+    //     function() {
+    //         $(".file-container").hasClass("collapsed") && ($(".file-container").removeClass("collapsed"),
+    //             $(".file-panel").find(".selected").removeClass("selected"))
+    //     }),
     $(function() {
         $(".info-content").stickOnScroll({
             topOffset: 0,

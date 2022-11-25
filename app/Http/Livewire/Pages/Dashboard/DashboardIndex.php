@@ -16,6 +16,7 @@ class DashboardIndex extends Component
     public $modal = "";
     public $ContainerDetailStatus = "";
     public $FolderSelected = "";
+    // public $page = 'dashboard';
 
     protected $queryString = [
         'search'
@@ -83,12 +84,14 @@ class DashboardIndex extends Component
 
     public function getDetail($slug)
     {
-        $folder = BaseFolders::where('slug', $slug)->first();
-        $this->emit('resetDetailFolder', $folder);
-        $this->FolderSelected = $slug;
-        $this->emit('setDetailFolder', $folder);
-        $this->FolderSelected = $slug;
-        $this->ContainerDetailStatus = 'collapsed';
+
+        // dd('masuk');
+        $this->dispatchBrowserEvent('show-side');
+        // $folder = BaseFolders::where('slug', $slug)->first();
+        // $this->emit('resetDetailFolder', $folder);
+        $this->emit('setDetailFolder', $slug);
+        // $this->FolderSelected = $slug;
+        // $this->ContainerDetailStatus = 'collapsed';
     }
 
     public function getDelete($slug)

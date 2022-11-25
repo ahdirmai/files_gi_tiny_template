@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\ManageUsersController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TrashController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +24,7 @@ Route::get('/', function () {
 Route::redirect('/home', '/dashboard');
 Route::redirect('/', '/dashboard');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/trash', [TrashController::class, 'index'])->name('trash');
 
 // Route::middleware('auth')->get('/dashboard', function () {
 //     return view('pages.dashboard.index', $data = [
@@ -39,17 +41,17 @@ Route::middleware('auth')->get('/folders/test', function () {
 
 
 
-Route::middleware('auth')->get('/trash', function () {
-    return view('pages.trash.index', $data = [
-        'page' => 'trash'
-    ]);
-})->name('trash');
+// Route::middleware('auth')->get('/trash', function () {
+//     return view('pages.trash.index', $data = [
+//         'page' => 'trash'
+//     ]);
+// })->name('trash');
 
 Route::middleware('auth')->get('/trash/test', function () {
     return view('pages.trash.inner-folder.index', $data = [
         'page' => 'trash'
     ]);
-});
+})->name('trash.inner');
 
 
 Route::middleware('auth')->get('/shared', function () {
