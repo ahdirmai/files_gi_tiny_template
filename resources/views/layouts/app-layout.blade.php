@@ -94,15 +94,16 @@
     <script>
         window.addEventListener('show-form',event=>{
         $('#basic-modal').modal('show');
-        console.log('masuk');
+        // console.log('masuk');
 })
 
-window.addEventListener('hide-form',event=>{
-    // console.log('outw');
-    $('#basic-modal').modal('hide');
-    $('body').removeClass('modal-open');
-    $('.modal-backdrop').remove();
-})
+    window.addEventListener('hide-form',event=>{
+        // console.log('outw');
+        $('#basic-modal').modal('hide');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+    })
+
     </script>
 
     @stack('scripts')

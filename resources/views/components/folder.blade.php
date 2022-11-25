@@ -1,41 +1,53 @@
 <div class="col-md-6 col-lg-4">
-    <div class="card shadow mb-4">
+    <div class="card shadow mb-4 {{ ($FolderSelected == $folder->slug? 'selected':'') }}"
+        wire:click="getDetail('{{ $folder->slug }}')">
         <div class="card-body file-list p-2">
             <div class="d-flex align-items-center">
                 <div class="d-flex align-items-center flex-column ml-2 mt-2">
-                    <div class="circle circle-md bg-secondary">
-                        <x-heroicon-o-folder-open style="height: 30px" class="text-white mx-auto">
-                        </x-heroicon-o-folder-open>
-                    </div>
-
+                    <a href="{{ route('dashboard.inner') }}">
+                        <div class="circle circle-md bg-secondary">
+                            <x-heroicon-o-folder-open style="height: 30px" class="text-white mx-auto">
+                            </x-heroicon-o-folder-open>
+                        </div>
+                    </a>
                     <div class="mt-2 font-weight-bold text-dark">
-                        <strong> Satu</strong>
+                        <strong>{{ $folder->user->name }} </strong>
                     </div>
                 </div>
                 <div class="flex-fill ml-4 fname">
-                    <strong>Components</strong><br />
-                    {{-- <span class="badge badge-light text-muted">Nama</span> --}}
-
+                    <a href="{{ route('dashboard.inner') }}">
+                        <strong> {{ $folder->name }}</strong><br />
+                        {{-- <span class="badge badge-light text-muted">Nama</span> --}}
+                    </a>
                 </div>
                 <div class="mr-2 mt-5">
                     <strong>
-
+                        @if($folder->access_type=="private")
+                        <x-heroicon-s-lock-closed style="width:15px" />
+                        @else
                         <x-heroicon-s-globe-americas style="width:15px" />
+                        @endif
                     </strong>
 
                 </div>
                 <div class="file-action">
-                    <button type="button" class="btn btn-link dropdown-toggle more-vertical p-0 text-muted mx-auto"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="text-muted sr-only">Action</span>
-                    </button>
-                    <div class="dropdown-menu m-2">
-                        <a class="dropdown-item" href="#"><i class="fe fe-chevrons-right fe-12 mr-4"></i>Move</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-copy fe-12 mr-4"></i>Copy</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-edit-3 fe-12 mr-4"></i>Rename</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-delete fe-12 mr-4"></i>Delete</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-share fe-12 mr-4"></i>Share</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-download fe-12 mr-4"></i>Download</a>
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-muted more-vertical pr-0" href="#"
+                            id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+
+                            <a class="dropdown-item pl-2" type="button" wire:click="getRename('{{ $folder->slug }}')">
+                                <x-heroicon-s-pencil-square style="width:15px" class="ml-0 mr-2" />Rename
+                            </a>
+                            <a class="dropdown-item pl-2" type="button" wire:click="getManage('{{ $folder->slug }}')">
+                                <x-heroicon-s-cog-8-tooth style="width:15px" class="ml-0 mr-2" />Manage
+                            </a>
+                            <a class="dropdown-item pl-2" type="button" wire:click="getDelete('{{ $folder->slug }}')">
+                                <x-heroicon-s-trash style="width:15px" class="ml-0 mr-2" />Delete
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

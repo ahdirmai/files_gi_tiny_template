@@ -48,4 +48,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Division::class);
     }
+
+    public function basefolder()
+    {
+        return $this->hasMany(BaseFolder::class, 'owner_id', 'id');
+    }
 }

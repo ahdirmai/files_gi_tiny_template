@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ManageUsersController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,24 +19,23 @@ Route::get('/', function () {
     return redirect('/dashboard');
 });
 
-// Login Form
-// Route::get('/login', function () {
-//     return view('auth.login');
-// });
 
-// Dashboard
-Route::middleware('auth')->get('/dashboard', function () {
-    return view('pages.dashboard.index', $data = [
-        'page' => 'dashboard'
-    ]);
-})->name('dashboard');
+Route::redirect('/home', '/dashboard');
+Route::redirect('/', '/dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+// Route::middleware('auth')->get('/dashboard', function () {
+//     return view('pages.dashboard.index', $data = [
+//         'page' => 'dashboard'
+//     ]);
+// })->name('dashboard');
 
 
 Route::middleware('auth')->get('/folders/test', function () {
     return view('pages.dashboard.inner-folder.index', $data = [
         'page' => 'dashboard'
     ]);
-});
+})->name('dashboard.inner');
 
 
 
@@ -66,21 +66,7 @@ Route::middleware('auth')->get('/shared/test', function () {
 
 
 Route::controller(ManageUsersController::class)->prefix('admin/users')->middleware('role:admin', 'auth')->group(function () {
-
     Route::get('', 'index')->name('manageusers.index');
-
-    // Route::get('/create', 'create')->name('users.create');
-    // Route::POST('/store', 'store')->name('users.store');
-
-
-    // Route::get('/edit/{id}', 'edit')->name('users.edit');
-    // Route::PUT('/update/{id}', 'update')->name('users.update');
-
-    // Route::get('/delete/{id}', 'showDestroy')->name('users.showdestroy');
-    // Route::DELETE('/delete/{id}', 'destroy')->name('users.destroy');
-
-    // Route::get('/reset-password/{id}', 'showReset')->name('users.showreset');
-    // Route::PUT('/reset/{id}', 'resetPassword')->name('users.resetpassword');
 });
 
 
