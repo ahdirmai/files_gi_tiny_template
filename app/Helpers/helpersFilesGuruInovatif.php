@@ -16,6 +16,18 @@ if (!function_exists('hello')) {
     }
 }
 
+if (!function_exists('getFolder')) {
+    function getFolder($slug)
+    {
+        $folder = BaseFolders::where('slug', $slug)->first();
+        if (!$folder) {
+            $folder = Content::where('slug', $slug)->first();
+            // return $folder;
+        }
+        return $folder;
+    }
+}
+
 if (!function_exists('checkAccessEnterFolder')) {
     function checkAccessEnterFolder($slug)
     {
@@ -38,8 +50,9 @@ if (!function_exists('checkAccessEnterFolder')) {
                 if (auth()->user()->id == $folder->owner_id) {
                     return true;
                 } else {
-                    if ($basefolder != "null") {
-                        if ($folder->baseFolder->owner_id == auth()->user()->id) {
+                    // dd($basefolder);
+                    if ($basefolder != "") {
+                        if ($basefolder->owner_id == auth()->user()->id) {
                             return true;
                         }
                     }

@@ -63,11 +63,7 @@ class InnerDashboardIndex extends Component
 
     public function getRename($slug)
     {
-        $folder = BaseFolders::where('slug', $slug)->first();
-
-        if (!$folder) {
-            $folder = Content::where('slug', $slug)->first();
-        }
+        $folder = getFolder($slug);
         $this->emit('setFolderName', $folder);
         $this->renameFolder();
     }
@@ -137,10 +133,27 @@ class InnerDashboardIndex extends Component
 
     public function render()
     {
-        $parent = BaseFolders::where('slug', $this->slug)->first();
-        if (!$parent) {
-            $parent = Content::where('slug', $this->slug)->first();
+
+        $parent = getFolder($this->slug);
+        $result = $parent->contentable;
+        if ($result == null) {
+            $parents[0] =  array(
+                'slug' => $parent->slug,
+                'name' => $parent->name
+            );
+        } else {
+            $count = 0;
+            do {
+                $parents[$count] = array(
+                    'slug'  => $result->slug,
+                    'name'  => $result->name,
+                );
+                $result = $result->contentable;
+                $count++;
+            } while ($result != null);
         }
+
+
         $folders = $parent->contents()->where('type', 'folder');
         $file = $parent->contents()->where('type', '!=', 'folder');
 
@@ -148,9 +161,9 @@ class InnerDashboardIndex extends Component
             'content_folder' => $folders->latest()->paginate(6, '*', 'folderPage'),
             'content_file' => $file->latest()->paginate(6, '*', 'filePage'),
             'folder' => $parent,
+            'breadcrumbs' => array_reverse($parents)
         ];
 
-        // dd($folders->first()->accesses->first()->user->name);
         return view('livewire..pages.dashboard.inner-dashboard-index', $data);
     }
 }

@@ -5,11 +5,22 @@
         </div>
         <div class="col-md-4 ">
             <div class="my-auto mr-5 d-flex justify-content-end">
+
                 <div class="row section-header-breadcrumb">
-                    <div class="breadcrumb-item"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="#">dua</a></div>
-                    <div class="breadcrumb-item"><a href="#">tiga</a></div>
+                    @foreach ($breadcrumbs as $breadcrumb )
+                    @if($folder->slug != $breadcrumb['slug'])
+                    <div class="breadcrumb-item"><a href="{{ route('dashboard.inner',$breadcrumb['slug']) }}">{{
+                            $breadcrumb['name']
+                            }}</a>
+                    </div>
+                    @endif
+                    @endforeach
+                    <div class="breadcrumb-item"><a href="{{ route('dashboard.inner', $folder->slug) }}">{{
+                            $folder->name
+                            }}</a>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
