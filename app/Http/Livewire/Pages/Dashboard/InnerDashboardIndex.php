@@ -18,29 +18,19 @@ class InnerDashboardIndex extends Component
     protected $listeners = [
         'resetModal' => 'handleResetModal',
         'folderStored' => 'handleStored',
+        'fileStored' => 'handleFileStored',
+        'urlStored' => 'handleURLStored',
         'folderRenamed' => 'handleRenamed',
         'storeFolderManage' => 'handleManaged',
         'folderDeleted' => 'handleFolderDeleted'
     ];
 
-    public function render()
-    {
-        $parent = BaseFolders::where('slug', $this->slug)->first();
-        if (!$parent) {
-            $parent = Content::where('slug', $this->slug)->first();
-        }
-        $folders = $parent->contents();
 
-        $data = [
-            'content' => $folders->latest()->paginate(6, '*', 'folderPage'),
-            'folder' => $parent,
-        ];
-        return view('livewire..pages.dashboard.inner-dashboard-index', $data);
-    }
-
-    public function createFolder()
+    // Call the Modall
+    public function createFolder($type)
     {
         $this->modal = "create";
+        $this->emit('setUploadType', $type);
         $this->dispatchBrowserEvent('show-form');
     }
 
@@ -61,8 +51,10 @@ class InnerDashboardIndex extends Component
         $this->modal = "delete";
         $this->dispatchBrowserEvent('show-form');
     }
+    // End call Modal
 
 
+    // Get The Data
     public function getDetail($slug)
     {
         $this->dispatchBrowserEvent('show-side');
@@ -82,12 +74,12 @@ class InnerDashboardIndex extends Component
 
     public function getManage($slug)
     {
-        $folder = BaseFolders::where('slug', $slug)->first();
+        // $folder = BaseFolders::where('slug', $slug)->first();
 
-        if (!$folder) {
-            $folder = Content::where('slug', $slug)->first();
-        }
-        $this->emit('setFolderManage', $folder);
+        // if (!$folder) {
+        //     $folder = Content::where('slug', $slug)->first();
+        // }
+        $this->emit('setFolderManage', $slug);
         $this->manageFolder();
     }
 
@@ -96,7 +88,10 @@ class InnerDashboardIndex extends Component
         $this->emit('deleteFolder', $slug);
         $this->deleteFolder();
     }
+    // End get Data
 
+
+    // Handle
     public function handleResetModal()
     {
         $this->dispatchBrowserEvent('hide-form');
@@ -107,6 +102,18 @@ class InnerDashboardIndex extends Component
     {
         $this->handleResetModal();
         $flasher->addSuccess('You have successfully Added Folder', '<h4> <b>  Folder Added!</b></h4>');
+    }
+
+    public function handleFileStored(SweetAlertFactory $flasher)
+    {
+        $this->handleResetModal();
+        $flasher->addSuccess('You have successfully Added File', '<h4> <b>  File Added!</b></h4>');
+    }
+
+    public function handleURLStored(SweetAlertFactory $flasher)
+    {
+        $this->handleResetModal();
+        $flasher->addSuccess('You have successfully Added URL', '<h4> <b>  URL Added!</b></h4>');
     }
 
     public function handleRenamed(SweetAlertFactory $flasher)
@@ -125,5 +132,25 @@ class InnerDashboardIndex extends Component
     {
         $this->handleResetModal();
         $flasher->addSuccess('You have successfully Delete your Folder', '<h4> <b> Folder Deleted!</b></h4>');
+    }
+    // End Handle
+
+    public function render()
+    {
+        $parent = BaseFolders::where('slug', $this->slug)->first();
+        if (!$parent) {
+            $parent = Content::where('slug', $this->slug)->first();
+        }
+        $folders = $parent->contents()->where('type', 'folder');
+        $file = $parent->contents()->where('type', '!=', 'folder');
+
+        $data = [
+            'content_folder' => $folders->latest()->paginate(6, '*', 'folderPage'),
+            'content_file' => $file->latest()->paginate(6, '*', 'filePage'),
+            'folder' => $parent,
+        ];
+
+        // dd($folders->first()->accesses->first()->user->name);
+        return view('livewire..pages.dashboard.inner-dashboard-index', $data);
     }
 }

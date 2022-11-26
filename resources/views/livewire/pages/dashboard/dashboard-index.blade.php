@@ -3,13 +3,13 @@
         <x-search-bar></x-search-bar>
 
         <div class="form-group col-md-1">
-            <button type="button" wire:click="createFolder()" class="btn mb-2 btn-primary"><span
+            <button type="button" wire:click="createFolder('folder')" class="btn mb-2 btn-primary"><span
                     class="fe fe-plus fe-16 mr-2"></span>Tambah</button>
         </div>
     </div>
 
 
-    <div class="file-container {{ $ContainerDetailStatus }}">
+    <div class="file-container">
         <div class="file-panel mt-4">
             <h6 class="mb-3">Base Folder</h6>
             <div class="row my-4">

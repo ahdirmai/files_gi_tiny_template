@@ -20,14 +20,14 @@
             <button type="button" class="btn mb-2 btn-primary" data-toggle="dropdown"><span
                     class="fe fe-plus fe-16 mr-2"></span>Tambah</button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="#" wire:click="createFolder()">
+                <a class="dropdown-item" href="#" wire:click="createFolder('folder')">
                     <span class="fe fe-folder mr-2"></span>
                     Folder
                 </a>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="#" wire:click="createFolder('file')">
                     <span class="fe fe-file mr-2"></span>
                     File</a>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="#" wire:click="createFolder('url')">
                     <span class="fe fe-link mr-2"></span>
                     URL</a>
             </div>
@@ -38,21 +38,22 @@
         <div class="file-panel mt-2">
             <h6 class="mb-3">Folder</h6>
             <div class="row my-4">
-                @foreach ($content as $folder)
+                @foreach ($content_folder as $folder)
                 {{-- <x-folder></x-folder> --}}
                 @include('components.folder')
                 @endforeach
 
             </div>
-            {{ $content->links() }}
+            {{ $content_folder->links() }}
         </div>
     </div>
 
     <div class="file-container">
         <div class="file-panel mt-4">
-            {{-- <h6 class="mb-3">File</h6> --}}
-            <x-file></x-file>
+            @include('components.file')
+
         </div>
+        {{ $content_file->links() }}
     </div>
 
     <livewire:component.detail-panel></livewire:component.detail-panel>
@@ -65,7 +66,7 @@
     <livewire:pages.dashboard.rename-folder></livewire:pages.dashboard.rename-folder>
 
     @elseif($modal =="manage")
-    <livewire:pages.dashboard.manage-folder></livewire:pages.dashboard.manage-folder>
+    <livewire:pages.dashboard.manage-folder :slug='$slug'></livewire:pages.dashboard.manage-folder>
 
     @elseif($modal =="delete")
     <livewire:pages.dashboard.delete-folder></livewire:pages.dashboard.delete-folder>

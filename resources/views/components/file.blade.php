@@ -10,108 +10,25 @@
         </tr>
     </thead>
     <tbody>
+        @foreach ($content_file as $file)
         <tr>
             <td class="text-center">
                 <div class="circle circle-sm bg-light">
-                    <x-heroicon-s-folder style="width:15px" class="text-secondary mx-auto" />
-                </div>
-            </td>
-            <th scope="row"> Admin Template Components<br />
-                <span class="badge badge-light ">Folder</span>
-            </th>
-            <td class="">Penelope Roy</td>
-            <td class="">Mar 17, 2020</td>
-            <td class="">Private</td>
-            <td>
-                <div class="file-action">
-                    <button type="button" class="btn btn-link dropdown-toggle more-vertical p-0 text-muted mx-auto"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="text-muted sr-only">Action</span>
-                    </button>
-                    <div class="dropdown-menu m-2">
-                        <a class="dropdown-item" href="#"><i class="fe fe-chevrons-right fe-12 mr-4"></i>Move</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-copy fe-12 mr-4"></i>Copy</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-edit-3 fe-12 mr-4"></i>Rename</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-delete fe-12 mr-4"></i>Delete</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-share fe-12 mr-4"></i>Share</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-download fe-12 mr-4"></i>Download</a>
-                    </div>
-                </div>
-            </td>
-        </tr>
+                    @if($file->type=='file')
 
-        <tr>
-            <td class="text-center">
-                <div class="circle circle-sm bg-light">
-                    <x-heroicon-s-photo style="width:15px" class="text-secondary mx-auto" />
-                </div>
-            </td>
-            <th scope="row"> Admin Template Components<br />
-                <span class="badge badge-light ">Folder</span>
-            </th>
-            <td class="">Penelope Roy</td>
-            <td class="">Mar 17, 2020</td>
-            <td class="">Private</td>
-            <td>
-                <div class="file-action">
-                    <button type="button" class="btn btn-link dropdown-toggle more-vertical p-0 text-muted mx-auto"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="text-muted sr-only">Action</span>
-                    </button>
-                    <div class="dropdown-menu m-2">
-                        <a class="dropdown-item" href="#"><i class="fe fe-chevrons-right fe-12 mr-4"></i>Move</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-copy fe-12 mr-4"></i>Copy</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-edit-3 fe-12 mr-4"></i>Rename</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-delete fe-12 mr-4"></i>Delete</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-share fe-12 mr-4"></i>Share</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-download fe-12 mr-4"></i>Download</a>
-                    </div>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td class="text-center">
-                <div class="circle circle-sm bg-light">
-                    <x-heroicon-s-document-text style="width:15px" class="text-secondary mx-auto" />
-                </div>
-            </td>
-            <th scope="row"> Admin Template Components<br />
-                <span class="badge badge-light ">Folder</span>
-            </th>
-            <td class="">Penelope Roy</td>
-            <td class="">Mar 17, 2020</td>
-            <td class="">Private</td>
-            <td>
-                <div class="file-action">
-                    <button type="button" class="btn btn-link dropdown-toggle more-vertical p-0 text-muted mx-auto"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="text-muted sr-only">Action</span>
-                    </button>
-                    <div class="dropdown-menu m-2">
-                        <a class="dropdown-item" href="#"><i class="fe fe-chevrons-right fe-12 mr-4"></i>Move</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-copy fe-12 mr-4"></i>Copy</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-edit-3 fe-12 mr-4"></i>Rename</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-delete fe-12 mr-4"></i>Delete</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-share fe-12 mr-4"></i>Share</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-download fe-12 mr-4"></i>Download</a>
-                    </div>
-                </div>
-            </td>
-        </tr>
-
-
-        <tr>
-            <td class="text-center">
-                <div class="circle circle-sm bg-light">
+                    <x-heroicon-s-document style="width:15px" class="text-secondary mx-auto" />
+                    @else
                     <x-heroicon-s-link style="width:15px" class="text-secondary mx-auto" />
+
+                    @endif
                 </div>
             </td>
-            <th scope="row"> Admin Template Components<br />
-                <span class="badge badge-light ">Folder</span>
+            <th scope="row">{{$file->name}}<br />
+                <span class="badge badge-light ">{{ $file->type }}</span>
             </th>
-            <td class="">Penelope Roy</td>
-            <td class="">Mar 17, 2020</td>
-            <td class="">Private</td>
+            <td class="">{{ $file->user->name }}</td>
+            <td class="">{{ $file->updated_at }}</td>
+            <td class="">{{ $file->access_type }}</td>
             <td>
                 <div class="file-action">
                     <button type="button" class="btn btn-link dropdown-toggle more-vertical p-0 text-muted mx-auto"
@@ -129,5 +46,6 @@
                 </div>
             </td>
         </tr>
+        @endforeach
     </tbody>
 </table>

@@ -34,15 +34,19 @@ class DashboardIndex extends Component
 
     protected $listeners = [
         'resetModal' => 'handleResetModal',
+
         'folderStored' => 'handleStored',
+
+
         'folderRenamed' => 'handleRenamed',
         'storeFolderManage' => 'handleManaged',
-        'folderDeleted' => 'handleFolderDeleted'
+        'folderDeleted' => 'handleFolderDeleted',
     ];
 
-    public function createFolder()
+    public function createFolder($type)
     {
         $this->modal = "create";
+        $this->emit('setUploadType', $type);
         $this->dispatchBrowserEvent('show-form');
     }
 
@@ -76,8 +80,8 @@ class DashboardIndex extends Component
     public function getManage($slug)
     {
         // dd('Masuk');
-        $folder = BaseFolders::where('slug', $slug)->first();
-        $this->emit('setFolderManage', $folder);
+        // $folder = BaseFolders::where('slug', $slug)->first();
+        $this->emit('setFolderManage', $slug);
         $this->manageFolder();
     }
 
@@ -104,6 +108,7 @@ class DashboardIndex extends Component
         $this->handleResetModal();
         $flasher->addSuccess('You have successfully Added Folder', '<h4> <b>  Folder Added!</b></h4>');
     }
+
 
     public function handleRenamed(SweetAlertFactory $flasher)
     {

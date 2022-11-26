@@ -53,4 +53,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(BaseFolder::class, 'owner_id', 'id');
     }
+    public function access()
+    {
+        return $this->hasMany(Access::class, 'user_id', 'id');
+    }
 }
