@@ -15,6 +15,7 @@ class DashboardController extends Controller
 
     public function index()
     {
+
         $page = 'dashboard';
         $data = [
             'page' => $page
@@ -24,16 +25,20 @@ class DashboardController extends Controller
 
     public function innerFolder($slug)
     {
-        $name = BaseFolders::where('slug', $slug)->first();
-        if (!$name) {
-            $name = Content::where('slug', $slug)->first();
+        if (checkAccessEnterFolder($slug)) {
+            $name = BaseFolders::where('slug', $slug)->first();
+            if (!$name) {
+                $name = Content::where('slug', $slug)->first();
+            }
+            $page = 'dashboard';
+            $data = [
+                'page' => $page,
+                'slug' => $slug,
+                'name' => $name->name
+            ];
+            return view('pages.dashboard.inner-folder.index', $data);
+        } else {
+            return response()->json('Minta Akses');
         }
-        $page = 'dashboard';
-        $data = [
-            'page' => $page,
-            'slug' => $slug,
-            'name' => $name->name
-        ];
-        return view('pages.dashboard.inner-folder.index', $data);
     }
 }
