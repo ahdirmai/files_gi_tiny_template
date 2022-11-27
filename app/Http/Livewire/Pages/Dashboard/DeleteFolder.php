@@ -36,11 +36,13 @@ class DeleteFolder extends Component
         if (!$folder) {
             $folder = Content::where('slug', $this->slug)->first();
         }
-        // $this->username = $user->name;
-        // $user->delete();
 
-        $folder->delete();
+        $deleted = $folder->delete();
         $this->resetModal();
         $this->emit('folderDeleted');
+        activity()
+            ->causedBy(auth()->user())
+            ->performedOn($deleted)
+            ->log('Delete Content');
     }
 }

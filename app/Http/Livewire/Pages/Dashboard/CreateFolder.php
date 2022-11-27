@@ -66,7 +66,6 @@ class CreateFolder extends Component
                 $baseFolder_id = $parent->id;
             }
 
-
             $content = new Content();
             $content->name = $this->name;
             $content->type = 'folder';
@@ -86,6 +85,10 @@ class CreateFolder extends Component
                 }
                 $this->resetModal();
                 $this->emit('folderStored');
+                activity()
+                    ->causedBy(auth()->user())
+                    ->performedOn($doneCreate)
+                    ->log('Create Folder');
             }
         } else {
             $folder = BaseFolders::create([
@@ -105,6 +108,10 @@ class CreateFolder extends Component
 
                 $this->resetModal();
                 $this->emit('folderStored');
+                activity()
+                    ->causedBy(auth()->user())
+                    ->performedOn($folder)
+                    ->log('Created Folder');
             };
         };
     }
@@ -144,6 +151,10 @@ class CreateFolder extends Component
             }
             $this->resetModal();
             $this->emit('fileStored');
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($doneUploadFile)
+                ->log('Created file');
 
             // if ($request->hasFile('file')) {
             //     $done = $doneUploadFile->addMediaFromRequest('file')->toMediaCollection('file');
@@ -206,6 +217,10 @@ class CreateFolder extends Component
             }
             $this->resetModal();
             $this->emit('urlStored');
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($doneUploadFile)
+                ->log('Created URL');
         }
     }
 }

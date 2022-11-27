@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class DetailPanel extends Component
 {
-    public $name, $owner, $access_type, $created_at, $updated_at;
+    public $name, $owner, $access_type, $created_at, $updated_at, $type;
 
     protected $listeners = [
         'setDetailFolder' => 'showDetailFolder'
@@ -20,15 +20,12 @@ class DetailPanel extends Component
 
     public function showDetailFolder($slug)
     {
-        $folders = BaseFolders::where('slug', $slug)->first();
-
-        if (!$folders) {
-            $folders = Content::where('slug', $slug)->first();
-        };
-        $this->name = $folders->name;
-        $this->owner = $folders->user->name;
-        $this->access_type = $folders->access_type;
-        $this->created_at = $folders->created_at;
-        $this->updated_at = $folders->updated_at;
+        $content = getFolder($slug);
+        $this->name = $content->name;
+        $this->owner = $content->user->name;
+        $this->type = $content->type;
+        $this->access_type = $content->access_type;
+        $this->created_at = $content->created_at;
+        $this->updated_at = $content->updated_at;
     }
 }

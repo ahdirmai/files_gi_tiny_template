@@ -9,8 +9,16 @@
 
     <x-slot name="header">
         <h5 class="modal-title d-flex align-items-center" id="defaultModalLabel">
+            @if ($type =="folder")
             <x-heroicon-o-folder-open style="height: 15px" class="mr-3">
             </x-heroicon-o-folder-open>
+            @elseif($type == "file")
+            <x-heroicon-o-document style="height: 15px" class="mr-3">
+            </x-heroicon-o-document>
+            @elseif($type =="url")
+            <x-heroicon-o-link style="height: 15px" class="mr-3">
+            </x-heroicon-o-link>
+            @endif
             <span>
                 {{ $name }}
             </span>
@@ -37,26 +45,38 @@
                     <div class="d-flex align-items-center my-1">
                         <div class="flex-fill">
                             <span class="circle circle-sm bg-white mr-2">
-                                <x-heroicon-o-folder-open style="height: 15px" class="mx-auto">
+                                @if ($type =="folder")
+                                <x-heroicon-o-folder-open style="height: 15px" class="mr-3">
                                 </x-heroicon-o-folder-open>
+                                @elseif($type == "file")
+                                <x-heroicon-o-document style="height: 15px" class="mr-3">
+                                </x-heroicon-o-document>
+                                @elseif($type =="url")
+                                <x-heroicon-o-link style="height: 15px" class="mr-3">
+                                </x-heroicon-o-link>
+                                @endif
                             </span>
                             <span class="h6 m-0">{{ $name }}</span>
                         </div>
                     </div>
                     <hr>
                     <div class="my-2">
-                        Folder Properties
+                        {{$type}} Properties
                     </div>
                     <dl class="row mb-4 small">
                         <dt class="col-6 text-muted">Owner</dt>
                         <dd class="col-6">{{ $owner }}</dd>
                         <dt class="col-6 text-muted">Type</dt>
-                        <dd class="col-6">Folder</dd>
+                        <dd class="col-6">{{ $type }}</dd>
                         <dt class="col-6 text-muted">Created at</dt>
                         <dd class="col-6">{{ date('d M Y h:i A', strtotime($created_at))}}</dd>
                         <dt class="col-6 text-muted">Last update</dt>
                         <dd class="col-6">{{ date('d M Y h:i A', strtotime($updated_at))}}</dd>
                     </dl>
+
+                    @if ($access_type =="private")
+                    People with access
+                    @endif
                 </div>
                 <!-- .tab-pane -->
                 <div class="tab-pane fade" id="activity" role="tabpanel" aria-labelledby="tab-activity">

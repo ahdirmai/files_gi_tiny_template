@@ -41,6 +41,10 @@ class RenameFolder extends Component
         if ($done) {
             $this->resetModal();
             $this->emit('folderRenamed');
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($done)
+                ->log('Rename Content');
         };
     }
 

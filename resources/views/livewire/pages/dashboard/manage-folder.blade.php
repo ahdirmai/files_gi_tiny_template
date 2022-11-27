@@ -57,8 +57,6 @@
             @endif
             <div class="form-group">
 
-                <h6>{{ $fols}}</h6>
-
                 {{-- {{ dd($folder) }} --}}
                 {{-- @foreach ($folder as $ss)
                 <p>asdsa</p>
@@ -76,7 +74,6 @@
                     <div class="d-flex justify-align-center">
                         <p class="m-0 mr-2 my-auto">🔘</p>
                         <p class="m-0 mr-2 my-auto">sadsadasds</p>
-
                     </div>
                     <div class="d-flex justify-align-center">
                         <div class="input-group-append">
@@ -87,6 +84,8 @@
                         </div>
                     </div>
                 </div>
+
+                {{ $slug }}
 
                 {{-- @endforeach --}}
             </div>

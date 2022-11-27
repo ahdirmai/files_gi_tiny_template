@@ -29,6 +29,7 @@
             <td class="">{{ $file->user->name }}</td>
             <td class="">{{ $file->updated_at }}</td>
             <td class="">{{ $file->access_type }}</td>
+            {{-- <td> {{ $file->slug }}</td> --}}
             <td>
                 <div class="file-action">
                     <button type="button" class="btn btn-link dropdown-toggle more-vertical p-0 text-muted mx-auto"
@@ -36,12 +37,18 @@
                         <span class="text-muted sr-only">Action</span>
                     </button>
                     <div class="dropdown-menu m-2">
-                        <a class="dropdown-item" href="#"><i class="fe fe-chevrons-right fe-12 mr-4"></i>Move</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-copy fe-12 mr-4"></i>Copy</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-edit-3 fe-12 mr-4"></i>Rename</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-delete fe-12 mr-4"></i>Delete</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-share fe-12 mr-4"></i>Share</a>
-                        <a class="dropdown-item" href="#"><i class="fe fe-download fe-12 mr-4"></i>Download</a>
+                        <a class="dropdown-item pl-2" type="button" wire:click="getDetail('{{ $file->slug }}')">
+                            <x-heroicon-s-information-circle style="width:15px" class="ml-0 mr-2" />Detail
+                        </a>
+                        <a class="dropdown-item pl-2" type="button" wire:click="getRename('{{ $file->slug }}')">
+                            <x-heroicon-s-pencil-square style="width:15px" class="ml-0 mr-2" />Rename
+                        </a>
+                        <a class="dropdown-item pl-2" type="button" wire:click="getManage('{{ $file->slug }}')">
+                            <x-heroicon-s-cog-8-tooth style="width:15px" class="ml-0 mr-2" />Manage
+                        </a>
+                        <a class="dropdown-item pl-2" type="button" wire:click="getDelete('{{ $file->slug }}')">
+                            <x-heroicon-s-trash style="width:15px" class="ml-0 mr-2" />Delete
+                        </a>
                     </div>
                 </div>
             </td>

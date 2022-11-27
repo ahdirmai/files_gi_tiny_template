@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class ManageFolder extends Component
 {
-    public $name, $folderAccessType, $slug, $invitedUsers, $invitedAccess, $fols;
+    public $name, $folderAccessType, $slug, $invitedUsers, $invitedAccess;
     public $userHaveAccess;
 
     protected $listeners = [
@@ -24,16 +24,14 @@ class ManageFolder extends Component
 
     public function showFolderManage($slug)
     {
-        // dd($slug);
         $folder = BaseFolders::where('slug', $slug)->first();
         if (!$folder) {
             $folder = Content::where('slug', $slug)->first();
         }
 
-        // $this->slug = $folder->slug;
         $this->name = $folder->name;
+        $this->slug = $folder->slug;
         $this->folderAccessType = $folder->access_type;
-        $this->fols = json_encode($folder->accesses);
 
 
         // foreach ($this->fols as $ss) {
@@ -63,6 +61,7 @@ class ManageFolder extends Component
 
     public function manageFolder()
     {
+        // dd($this->slug);
         $this->validate([
             'folderAccessType' => 'required'
         ]);
@@ -71,8 +70,6 @@ class ManageFolder extends Component
         if (!$folder) {
             $folder = Content::where('slug', $this->slug)->first();
         }
-
-        // dd($folder);
 
         $done = $folder->update([
             'access_type' => $this->folderAccessType
@@ -99,6 +96,10 @@ class ManageFolder extends Component
             // }
             $this->resetModal();
             $this->emit('storeFolderManage');
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($done)
+                ->log('Manage Content');
         }
     }
 
