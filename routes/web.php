@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\ManageUsersController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FilesController;
 use App\Http\Controllers\TrashController;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -31,8 +32,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
 Route::get('/folders/{slug}', [DashboardController::class, 'innerFolder'])->name('dashboard.inner');
 
-
-
+Route::get('/files/download/{slug}', [FilesController::class, 'downloadFile'])->name('file.download');
 Route::get('/trash', [TrashController::class, 'index'])->name('trash');
 
 

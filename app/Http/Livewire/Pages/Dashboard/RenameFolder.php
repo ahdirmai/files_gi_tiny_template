@@ -43,7 +43,7 @@ class RenameFolder extends Component
             $this->emit('folderRenamed');
             activity()
                 ->causedBy(auth()->user())
-                ->performedOn($done)
+                ->performedOn($folder)
                 ->log('Rename Content');
         };
     }

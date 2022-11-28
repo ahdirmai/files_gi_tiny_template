@@ -7,7 +7,7 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </x-slot>
-    <form>
+    <form enctype="multipart/form-data">
         <x-slot name="content">
             @if($createType=="folder")
             <div class="form-group">
@@ -51,6 +51,8 @@
                     <input type="text" wire:model="url" class="form-control" id="name" name="name">
                 </div>
             </div>
+
+            {{-- {{ $url }} --}}
             @endif
 
             <div class="access-radio">
@@ -107,9 +109,15 @@
             <div class="form-group mb-3">
                 <label for="customFile">Upload File</label>
                 <div class="custom-file">
-                    <input type="file" id="customFile" wire.model="file">
+                    <input type="file" id="customFile" wire:model="file">
                 </div>
             </div>
+            @endif
+
+            @if ($file)
+
+            {{-- <img src="{{ $file}}"> --}}
+            {{ $file }}
             @endif
         </x-slot>
 

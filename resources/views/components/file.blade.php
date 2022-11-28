@@ -5,6 +5,7 @@
             <th class="w-40 text-dark font-weight-bold">Name</th>
             <th class="text-dark font-weight-bold">Owner</th>
             <th class="text-dark font-weight-bold">Last Update</th>
+            {{-- <th>File</th> --}}
             <th class="text-dark font-weight-bold">Access</th>
             <th></th>
         </tr>
@@ -15,19 +16,28 @@
             <td class="text-center">
                 <div class="circle circle-sm bg-light">
                     @if($file->type=='file')
-
                     <x-heroicon-s-document style="width:15px" class="text-secondary mx-auto" />
                     @else
                     <x-heroicon-s-link style="width:15px" class="text-secondary mx-auto" />
-
                     @endif
                 </div>
             </td>
-            <th scope="row">{{$file->name}}<br />
+            <th scope="row">
+                @if ($file->type == 'file')
+                <a href="#" type="button" wire:click="getFile('{{ $file->slug }}')">
+                    {{ $file->name }}
+                </a>
+                @else
+                <a href="#" type="button" wire:click="getFile('{{ $file->slug }}')">
+                    {{ $file->name }}
+                </a>
+                @endif
+                <br />
                 <span class="badge badge-light ">{{ $file->type }}</span>
             </th>
             <td class="">{{ $file->user->name }}</td>
             <td class="">{{ $file->updated_at }}</td>
+            {{-- <td>{{ $file->getFirstMediaUrl($file->contentable->slug)}}</td> --}}
             <td class="">{{ $file->access_type }}</td>
             {{-- <td> {{ $file->slug }}</td> --}}
             <td>

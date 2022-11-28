@@ -8,11 +8,15 @@ use App\Models\Content;
 use App\Models\User;
 use Livewire\Component;
 use Illuminate\Support\Str;
+use Livewire\WithFileUploads;
 use Spatie\Permission\Models\Permission;
 
 class CreateFolder extends Component
 {
+
+    use WithFileUploads;
     public $name, $folderAccessType = "public", $slug = "", $createType = "", $invitedUsers, $invitedAccess, $url;
+    public $file;
 
     protected $listeners = [
         'setUploadType' => 'setCreateType'
@@ -118,9 +122,11 @@ class CreateFolder extends Component
 
     public function createFile($slug)
     {
+        // dd($this->file);
         $this->validate([
             'name' => 'required|min:3',
-            'folderAccessType' => 'required'
+            'folderAccessType' => 'required',
+            'file' => 'required'
         ]);
 
         $parent = BaseFolders::where('slug', $slug)->first();
@@ -141,6 +147,9 @@ class CreateFolder extends Component
         $content->access_type = $this->folderAccessType;
         $doneUploadFile = $parent->contents()->save($content);
         if ($doneUploadFile) {
+            if ($this->file) {
+                $doneUploadFile->addMedia($this->file)->toMediaCollection($slug);
+            }
             if ($this->invitedUsers != "") {
                 $newContent = Content::where('slug', $content->slug)->first();
                 $access = new Access();
@@ -155,32 +164,6 @@ class CreateFolder extends Component
                 ->causedBy(auth()->user())
                 ->performedOn($doneUploadFile)
                 ->log('Created file');
-
-            // if ($request->hasFile('file')) {
-            //     $done = $doneUploadFile->addMediaFromRequest('file')->toMediaCollection('file');
-            //     if ($done) {
-            //         if ($request->FileisPrivate == 'private') {
-            //             if ($request->invitedUser) {
-            //                 $data_access = [
-            //                     'content_id' => $doneUploadFile->id,
-            //                     'permission_id' => $request->accessType,
-            //                     'user_id' => $request->invitedUser,
-            //                     'status' => 'accept'
-            //                 ];
-            //                 $accessDone = ContentAccess::create($data_access);
-            //                 if ($accessDone) {
-            //                     activity()->causedBy(auth()->user())->performedOn($doneUploadFile)->log('Upload File');
-            //                     $flasher->addSuccess('File has been Uploaded successfully!');
-            //                     return redirect()->route('EnterFolder', $request->parentSlug);
-            //                 }
-            //             }
-            //         }
-
-            //         activity()->causedBy(auth()->user())->performedOn($doneUploadFile)->log('Upload File');
-            //         $flasher->addSuccess('File has been Uploaded successfully!');
-            //         return redirect()->route('EnterFolder', $request->parentSlug);
-            //     }
-            // }
         }
     }
 
@@ -188,6 +171,7 @@ class CreateFolder extends Component
     {
         $this->validate([
             'name' => 'required|min:3',
+            'url' => 'required',
             'folderAccessType' => 'required'
         ]);
 
@@ -198,6 +182,7 @@ class CreateFolder extends Component
         } else {
             $baseFolder_id = $parent->id;
         }
+
         $content = new Content();
         $content->name = $this->name;
         $content->type = 'url';
@@ -205,6 +190,7 @@ class CreateFolder extends Component
         $content->slug = Str::random(32);
         $content->basefolder_id = $baseFolder_id;
         $content->access_type = $this->folderAccessType;
+        $content->url = $this->url;
         $doneUploadFile = $parent->contents()->save($content);
         if ($doneUploadFile) {
             if ($this->invitedUsers != "") {

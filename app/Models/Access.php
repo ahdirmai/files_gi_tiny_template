@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Access extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $table = 'accesses';
+    protected $table = 'access';
     protected $fillable = ['content_id', 'permission_id', 'user_id', 'status'];
 
     public function user()

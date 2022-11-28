@@ -51,6 +51,12 @@ class InnerDashboardIndex extends Component
         $this->modal = "delete";
         $this->dispatchBrowserEvent('show-form');
     }
+
+    public function fileInfo()
+    {
+        $this->modal = "fileInfo";
+        $this->dispatchBrowserEvent('show-form');
+    }
     // End call Modal
 
 
@@ -61,6 +67,14 @@ class InnerDashboardIndex extends Component
         $this->emit('setDetailFolder', $slug);
     }
 
+    public function getFile($slug)
+    {
+        $this->emit('setFile', $slug);
+        $this->fileInfo();
+    }
+
+
+
     public function getRename($slug)
     {
         $folder = getFolder($slug);
@@ -70,11 +84,7 @@ class InnerDashboardIndex extends Component
 
     public function getManage($slug)
     {
-        // $folder = BaseFolders::where('slug', $slug)->first();
 
-        // if (!$folder) {
-        //     $folder = Content::where('slug', $slug)->first();
-        // }
         $this->emit('setFolderManage', $slug);
         $this->manageFolder();
     }

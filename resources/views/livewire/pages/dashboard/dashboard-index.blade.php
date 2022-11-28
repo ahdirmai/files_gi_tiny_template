@@ -1,6 +1,20 @@
 <div>
     <div class="form-row">
-        <x-search-bar></x-search-bar>
+        <div class="form-group col-md-1">
+            <select class="form-control select2" id="simple-select2" wire:model="filter">
+                <option value="file">Private</option>
+                <option value="folder">Public</option>
+            </select>
+        </div>
+        <div class="form-group col-md-10">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+                    aria-describedby="Searh">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit" id="button-addon2">Cari</button>
+                </div>
+            </div>
+        </div>
 
         <div class="form-group col-md-1">
             <button type="button" wire:click="createFolder('folder')" class="btn mb-2 btn-primary"><span

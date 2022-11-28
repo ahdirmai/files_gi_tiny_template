@@ -66,10 +66,7 @@ class ManageFolder extends Component
             'folderAccessType' => 'required'
         ]);
 
-        $folder = BaseFolders::where('slug', $this->slug)->first();
-        if (!$folder) {
-            $folder = Content::where('slug', $this->slug)->first();
-        }
+        $folder = getFolder($this->slug);
 
         $done = $folder->update([
             'access_type' => $this->folderAccessType
@@ -98,7 +95,7 @@ class ManageFolder extends Component
             $this->emit('storeFolderManage');
             activity()
                 ->causedBy(auth()->user())
-                ->performedOn($done)
+                ->performedOn($folder)
                 ->log('Manage Content');
         }
     }
