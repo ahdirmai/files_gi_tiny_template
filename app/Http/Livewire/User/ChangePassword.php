@@ -42,4 +42,8 @@ class ChangePassword extends Component
             $this->emit('passwordChanged');
         }
     }
+    public function resetModal()
+    {
+        $this->emit('resetModal');
+    }
 }

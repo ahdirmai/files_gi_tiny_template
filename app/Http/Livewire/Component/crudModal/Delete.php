@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\Pages\Dashboard;
+namespace App\Http\Livewire\Component\crudModal;
 
 use App\Models\BaseFolders;
 use App\Models\Content;
 use Livewire\Component;
 
-class DeleteFolder extends Component
+class Delete extends Component
 {
 
     public $slug;
@@ -16,7 +16,7 @@ class DeleteFolder extends Component
 
     public function render()
     {
-        return view('livewire..pages.dashboard.delete-folder');
+        return view('livewire.component.crud-modal.delete');
     }
 
     public function resetModal()
@@ -42,7 +42,7 @@ class DeleteFolder extends Component
         $this->emit('folderDeleted');
         activity()
             ->causedBy(auth()->user())
-            ->performedOn($deleted)
+            ->performedOn($folder)
             ->log('Delete Content');
     }
 }

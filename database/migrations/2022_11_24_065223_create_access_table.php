@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade');
-            $table->enum('status', ['accept', 'pending', 'denied']);
+            $table->enum('status', ['accept', 'pending', 'reject']);
             $table->timestamps();
             $table->softDeletes();
         });

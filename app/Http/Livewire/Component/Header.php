@@ -16,7 +16,12 @@ class Header extends Component
         'userProfileUpdated' => 'handleProfileUpdated',
         'userPassswordChanged' => 'handlePasswordChanged',
         'wrongOldPassword' => 'handleWrongOldPassword',
-        'passwordChanged' => 'handlePasswordChanged'
+        'passwordChanged' => 'handlePasswordChanged',
+        'resetModal' => 'handleResetModal',
+        'hideHeader' => 'handleHideHeader',
+        'requestAccept' => 'handleRequestAccept',
+        'requestReject' => 'handleRequestReject'
+
     ];
 
     public function render()
@@ -30,12 +35,10 @@ class Header extends Component
         return view('livewire.component.header', $data);
     }
 
-    public function getProfile()
+    public function handleHideHeader()
     {
-        $this->modalProfile = "set-profile";
-        $this->user_id = auth()->user()->id;
-        $this->dispatchBrowserEvent('show-form');
-        $this->emit('setProfile', $this->user_id);
+        // $this->handleResetModal();
+        // $this->modalProfile = "";
     }
 
     public function handleProfileUpdated($user, SweetAlertFactory $flasher)
@@ -57,11 +60,46 @@ class Header extends Component
         $flasher->addSuccess('You have successfully changed your password', '<h4> <b> Password Changed!</b></h4>');
     }
 
+
+    public function handleResetModal()
+    {
+        $this->modalProfile = "";
+        $this->dispatchBrowserEvent('hide-form');
+    }
+
+    public function handleRequestAccept(SweetAlertFactory $flasher)
+    {
+        // $this->dispatchBrowserEvent('hide-side');
+        $flasher->addSuccess('You have successfully Accept the request', '<h4> <b> Access Accepted!</b></h4>');
+    }
+
+    public function handleRequestReject(SweetAlertFactory $flasher)
+    {
+        // $this->dispatchBrowserEvent('hide-side');
+        $flasher->addSuccess('You have successfully rejected the request', '<h4> <b> Access rejected!</b></h4>');
+    }
+
+    public function getProfile()
+    {
+        $this->modalProfile = "set-profile";
+        $this->user_id = auth()->user()->id;
+        $this->dispatchBrowserEvent('show-form');
+        $this->emit('setProfile', $this->user_id);
+    }
+
     public function getPassword()
     {
         $this->modalProfile = "set-password";
         $this->user_id = auth()->user()->id;
         $this->dispatchBrowserEvent('show-form');
         $this->emit('setPassword', $this->user_id);
+    }
+
+    public function getNotificaiton()
+    {
+        $this->modalProfile = "set-notification";
+        $this->dispatchBrowserEvent('show-side');
+        $this->user_id = auth()->user()->id;
+        $this->emit('setNotification', $this->user_id);
     }
 }

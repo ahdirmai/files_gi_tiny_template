@@ -14,3 +14,12 @@
         </div>
     </div>
 </div>
+
+<script>
+    jQuery(document).ready(function($) {
+            $("#basic-modal").on("hide.bs.modal", (event) => {
+                // console.log('hidden');
+                window.livewire.emit('resetModal');
+            });
+        });
+</script>

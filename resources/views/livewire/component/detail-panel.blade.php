@@ -9,19 +9,22 @@
 
     <x-slot name="header">
         <h5 class="modal-title d-flex align-items-center" id="defaultModalLabel">
-            @if ($type =="folder")
-            <x-heroicon-o-folder-open style="height: 15px" class="mr-3">
-            </x-heroicon-o-folder-open>
-            @elseif($type == "file")
+            @if($type == "file")
             <x-heroicon-o-document style="height: 15px" class="mr-3">
             </x-heroicon-o-document>
             @elseif($type =="url")
             <x-heroicon-o-link style="height: 15px" class="mr-3">
             </x-heroicon-o-link>
+            @else
+            <x-heroicon-o-folder-open style="height: 15px" class="mr-3">
+            </x-heroicon-o-folder-open>
             @endif
+            {{-- {{ $type }} --}}
             <span>
                 {{ $name }}
             </span>
+
+
         </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -42,22 +45,32 @@
             </ul>
             <div class="tab-content" id="file-tabs">
                 <div class="tab-pane fade show active" id="detail" role="tabpanel" aria-labelledby="tab-detail">
-                    <div class="d-flex align-items-center my-1">
+                    <div class="d-flex align-items-center my-1 text-center ">
                         <div class="flex-fill">
-                            <span class="circle circle-sm bg-white mr-2">
-                                @if ($type =="folder")
-                                <x-heroicon-o-folder-open style="height: 15px" class="mr-3">
-                                </x-heroicon-o-folder-open>
-                                @elseif($type == "file")
+                            <span class="circle circle-sm bg-white">
+
+
+                                @if($type == "file")
                                 <x-heroicon-o-document style="height: 15px" class="mr-3">
                                 </x-heroicon-o-document>
                                 @elseif($type =="url")
+
                                 <x-heroicon-o-link style="height: 15px" class="mr-3">
                                 </x-heroicon-o-link>
+                                @else
+                                <x-heroicon-o-folder-open style="height: 15px" class="mr-3">
+                                </x-heroicon-o-folder-open>
                                 @endif
                             </span>
                             <span class="h6 m-0">{{ $name }}</span>
+
                         </div>
+
+                    </div>
+                    <div class="text-center">
+                        @if ($type == 'file')
+                        <small>{{ $filename}}</small>
+                        @endif
                     </div>
                     <hr>
                     <div class="my-2">
@@ -67,11 +80,16 @@
                         <dt class="col-6 text-muted">Owner</dt>
                         <dd class="col-6">{{ $owner }}</dd>
                         <dt class="col-6 text-muted">Type</dt>
-                        <dd class="col-6">{{ $type }}</dd>
+                        <dd class="col-6">{{ $type ?$type:"Folder" }}</dd>
                         <dt class="col-6 text-muted">Created at</dt>
                         <dd class="col-6">{{ date('d M Y h:i A', strtotime($created_at))}}</dd>
                         <dt class="col-6 text-muted">Last update</dt>
                         <dd class="col-6">{{ date('d M Y h:i A', strtotime($updated_at))}}</dd>
+                        @if ($type == 'file')
+                        <dt class="col-6 text-muted">Last update</dt>
+                        <dd class="col-6">{{ date('d M Y h:i A', strtotime($updated_at))}}</dd>
+                        @endif
+
                     </dl>
 
                     @if ($access_type =="private")

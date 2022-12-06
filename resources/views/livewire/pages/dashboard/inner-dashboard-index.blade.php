@@ -27,7 +27,8 @@
     <hr>
     <div class="form-row">
         <div class="form-group col-md-1">
-            <select class="form-control select2" id="simple-select2">
+            <select class="form-control" wire:model="type">
+                <option value="" selected>All</option>
                 <option value="file">File</option>
                 <option value="folder">Folder</option>
                 <option value="url">Url</option>
@@ -35,7 +36,7 @@
         </div>
         <div class="form-group col-md-10">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+                <input type="text" class="form-control" wire:model="search" placeholder="Search" aria-label="Search"
                     aria-describedby="Searh">
                 <div class="input-group-append">
                     <button class="btn btn-primary" type="submit" id="button-addon2">Cari</button>
@@ -60,6 +61,30 @@
         </div>
     </div>
 
+    {{-- <div class="file-container">
+        <div class="file-panel mt-2">
+            <h6 class="mb-3">Folder</h6>
+            <div class="row my-4">
+                @foreach ($content_folder as $folder)
+                @include('components.folder')
+                @endforeach
+            </div>
+            {{ $content_folder->links() }}
+        </div>
+    </div> --}}
+    {{--
+    <div class="file-container">
+        <div class="file-panel mt-4">
+            @include('components.file')
+        </div>
+        {{ $content_file->links() }}
+    </div> --}}
+
+
+    {{-- {{ $type }} --}}
+    @if((count($content_folder) >= 1) || (count($content_file) >= 1) )
+    @if((count($content_folder) >= 1))
+    @if($type == "" || $type =='folder')
     <div class="file-container">
         <div class="file-panel mt-2">
             <h6 class="mb-3">Folder</h6>
@@ -68,36 +93,58 @@
                 {{-- <x-folder></x-folder> --}}
                 @include('components.folder')
                 @endforeach
-
             </div>
             {{ $content_folder->links() }}
         </div>
     </div>
+    @endif
 
+    @else
+    <div class="text-center">
+        <p class="text-dark">There are no folder </p>
+    </div>
+    @endif
+
+    <hr>
+    @if((count($content_file) >= 1))
+    @if($type == "" || $type =='file'||$type=='url')
     <div class="file-container">
         <div class="file-panel mt-4">
             @include('components.file')
-
         </div>
         {{ $content_file->links() }}
     </div>
+    @endif
 
-    <livewire:component.detail-panel></livewire:component.detail-panel>
 
+    @else
+    <div class="text-center">
+        <p class="text-dark">There are no files </p>
+    </div>
+    @endif
+    @else
+    <div class="text-center">
+        <p class="text-dark">There are nothing </p>
+    </div>
+    @endif
 
     @if($modal =="create")
-    <livewire:pages.dashboard.create-folder :slug='$slug'></livewire:pages.dashboard.create-folder>
+    <livewire:component.crud-modal.create :slug='$slug'></livewire:component.crud-modal.create>
 
     @elseif($modal=="rename")
-    <livewire:pages.dashboard.rename-folder></livewire:pages.dashboard.rename-folder>
+    <livewire:component.crud-modal.rename></livewire:component.crud-modal.rename>
 
     @elseif($modal =="manage")
-    <livewire:pages.dashboard.manage-folder :slug='$slug'></livewire:pages.dashboard.manage-folder>
+    <livewire:component.crud-modal.manage></livewire:component.crud-modal.manage>
 
     @elseif($modal =="delete")
-    <livewire:pages.dashboard.delete-folder></livewire:pages.dashboard.delete-folder>
+    <livewire:component.crud-modal.delete></livewire:component.crud-modal.delete>
 
-    @elseif($modal =="fileInfo")
-    <livewire:pages.dashboard.info-file></livewire:pages.dashboard.info-file>
+    @elseif($modal =="detail")
+    <livewire:component.detail-panel></livewire:component.detail-panel>
+
+    @elseif($modal =="request")
+    <livewire:component.request-access></livewire:component.request-access>
+
     @endif
 </div>

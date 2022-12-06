@@ -16,15 +16,19 @@ class DashboardIndex extends Component
     public $modal = "";
     public $ContainerDetailStatus = "";
     public $FolderSelected = "";
+    public $filter;
+    public $paginate = 5;
+
     // public $page = 'dashboard';
 
     protected $queryString = [
-        'search'
+        'search', 'filter'
     ];
 
     public function mount()
     {
         $this->search = request()->query('search', $this->search);
+        $this->filter = request()->query('filter', $this->filter);
     }
 
     public function updatingSearch()
@@ -32,16 +36,32 @@ class DashboardIndex extends Component
         $this->resetPage();
     }
 
+    public function checkSearch()
+    {
+        if ($this->search == "") {
+            $this->search = null;
+        }
+
+        if ($this->filter == '0') {
+            $this->filter = null;
+        }
+    }
+
     protected $listeners = [
         'resetModal' => 'handleResetModal',
-
         'folderStored' => 'handleStored',
-
-
         'folderRenamed' => 'handleRenamed',
         'storeFolderManage' => 'handleManaged',
         'folderDeleted' => 'handleFolderDeleted',
+        'storeRequestAccess' => 'handleRequestAccess',
+        // 'hideDashboard' => 'handleHideDashboard'
     ];
+
+    public function handleHideDashboard()
+    {
+        // $this->handleResetModal();
+        $this->modal = "";
+    }
 
     public function createFolder($type)
     {
@@ -68,6 +88,12 @@ class DashboardIndex extends Component
         $this->dispatchBrowserEvent('show-form');
     }
 
+    public function requestAccess()
+    {
+        $this->modal = "request";
+        $this->dispatchBrowserEvent('show-form');
+    }
+
 
     public function getRename($slug)
     {
@@ -76,18 +102,24 @@ class DashboardIndex extends Component
         $this->renameFolder();
     }
 
+    public function getRequest($slug)
+    {
+        $this->emit('setRequestAccess', $slug);
+        $this->requestAccess();
+    }
+
 
     public function getManage($slug)
     {
-        // dd('Masuk');
-        // $folder = BaseFolders::where('slug', $slug)->first();
         $this->emit('setFolderManage', $slug);
         $this->manageFolder();
     }
 
     public function getDetail($slug)
     {
+        $this->modal = "detail";
         $this->dispatchBrowserEvent('show-side');
+
         $this->emit('setDetailFolder', $slug);
     }
 
@@ -128,10 +160,23 @@ class DashboardIndex extends Component
         $flasher->addSuccess('You have successfully Delete your Folder', '<h4> <b> Folder Deleted!</b></h4>');
     }
 
+    public function handleRequestAccess(SweetAlertFactory $flasher)
+    {
+        $this->handleResetModal();
+        $flasher->addSuccess('You have successfully Request Access', '<h4> <b> Request Send!</b></h4>');
+    }
+
     public function render()
     {
+        $this->checkSearch();
+
         if ($this->search) {
             $baseFolders = BaseFolders::where('name', 'like', '%' . $this->search . '%')->latest();
+        } elseif ($this->filter) {
+            $baseFolders = BaseFolders::where('access_type', 'like', '%' . $this->filter . '%')->latest();
+        } elseif ($this->search && $this->filter) {
+            $baseFolders = BaseFolders::latest()->where('name', 'like', '%' . $this->search . '%')
+                ->where('access_type', $this->filter);
         } else {
             $baseFolders = BaseFolders::latest();
         }

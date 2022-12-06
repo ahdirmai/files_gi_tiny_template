@@ -50,6 +50,9 @@
                             <a class="dropdown-item pl-2" type="button" wire:click="getDetail('{{ $folder->slug }}')">
                                 <x-heroicon-s-information-circle style="width:15px" class="ml-0 mr-2" />Detail
                             </a>
+
+
+                            @if (auth()->user()->id == $folder->owner_id || auth()->user()->hasRole('admin'))
                             <a class="dropdown-item pl-2" type="button" wire:click="getRename('{{ $folder->slug }}')">
                                 <x-heroicon-s-pencil-square style="width:15px" class="ml-0 mr-2" />Rename
                             </a>
@@ -59,6 +62,21 @@
                             <a class="dropdown-item pl-2" type="button" wire:click="getDelete('{{ $folder->slug }}')">
                                 <x-heroicon-s-trash style="width:15px" class="ml-0 mr-2" />Delete
                             </a>
+                            @elseif($folder->access_type=="private")
+                            <?php $param = "" ?>
+                            @foreach($folder->accesses as $haveAccess)
+                            @if($haveAccess->user_id == auth()->user()->id && $haveAccess->status != 'reject')
+                            <?php $param = "ada" ?>
+                            @endif
+                            @endforeach
+                            @if(!$param)
+                            <a class="dropdown-item pl-2" type="button" wire:click="getRequest('{{ $folder->slug }}')">
+                                <x-heroicon-s-pencil-square style=" width:15px" class="ml-0" />
+                                Ask Request
+                            </a>
+                            @endif
+                            @endif
+
                         </div>
                     </div>
                 </div>

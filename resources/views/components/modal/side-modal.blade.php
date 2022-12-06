@@ -4,9 +4,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 {{ $header }}
-
             </div>
             <div class="modal-body">
+
                 {{ $body }}
             </div>
             <div class="modal-footer">
@@ -15,3 +15,11 @@
         </div>
     </div>
 </div>
+<script>
+    jQuery(document).ready(function($) {
+            $("#modal-side").on("hide.bs.modal", (event) => {
+                // console.log('hidden');
+                window.livewire.emit('resetModal');
+            });
+        });
+</script>

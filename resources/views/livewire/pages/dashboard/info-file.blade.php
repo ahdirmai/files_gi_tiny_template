@@ -2,7 +2,6 @@
     <x-slot name="header">
         <h5 class="modal-title">
             @if(!$url)
-
             Download File
             @else
             Copy Link

@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class DetailPanel extends Component
 {
-    public $name, $owner, $access_type, $created_at, $updated_at, $type;
+    public $name, $owner, $access_type, $created_at, $updated_at, $type, $filename;
 
     protected $listeners = [
         'setDetailFolder' => 'showDetailFolder'
@@ -27,5 +27,8 @@ class DetailPanel extends Component
         $this->access_type = $content->access_type;
         $this->created_at = $content->created_at;
         $this->updated_at = $content->updated_at;
+        if ($this->type == 'file') {
+            $this->filename = $content->getMedia($content->contentable->slug)->first()->file_name;
+        }
     }
 }

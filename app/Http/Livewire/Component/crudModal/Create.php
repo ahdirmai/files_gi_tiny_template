@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Pages\Dashboard;
+namespace App\Http\Livewire\Component\crudModal;
 
 use App\Models\Access;
 use App\Models\BaseFolders;
@@ -11,11 +11,11 @@ use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
 use Spatie\Permission\Models\Permission;
 
-class CreateFolder extends Component
+class Create extends Component
 {
 
     use WithFileUploads;
-    public $name, $folderAccessType = "public", $slug = "", $createType = "", $invitedUsers, $invitedAccess, $url;
+    public $name, $folderAccessType = "public", $slug = "", $createType = "", $invitedUsers, $invitedAccess = "1", $url;
     public $file;
 
     protected $listeners = [
@@ -33,7 +33,7 @@ class CreateFolder extends Component
             'users' => $users,
             'permissions' => $permissions
         ];
-        return view('livewire.pages.dashboard.create-folder', $data);
+        return view('livewire.component.crud-modal.create', $data);
     }
 
     public function resetModal()

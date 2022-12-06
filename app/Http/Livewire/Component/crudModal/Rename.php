@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\Pages\Dashboard;
+namespace App\Http\Livewire\Component\crudModal;
 
 use App\Models\BaseFolders;
 use App\Models\Content;
 use Livewire\Component;
 
-class RenameFolder extends Component
+class Rename extends Component
 {
 
     public $name, $slug;
@@ -16,7 +16,7 @@ class RenameFolder extends Component
     ];
     public function render()
     {
-        return view('livewire.pages.dashboard.rename-folder');
+        return view('livewire.component.crud-modal.rename');
     }
     public function showFolderName($folder)
     {

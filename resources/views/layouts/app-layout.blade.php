@@ -43,8 +43,6 @@
         @yield('content')
         <!-- main -->
 
-
-        @include('components.notification-panel')
     </div>
 
 
@@ -94,10 +92,10 @@
 
     <script>
         window.addEventListener('show-form',event=>{
-        $('#basic-modal').modal('show');
-        })
+            $('#basic-modal').modal('show');
+        });
+
     window.addEventListener('hide-form',event=>{
-        // console.log('outw');
         $('#basic-modal').modal('hide');
         $('body').removeClass('modal-open');
         $('.modal-backdrop').remove();
@@ -108,11 +106,23 @@
         $('#modal-side').modal('show');
         })
 
+
     window.addEventListener('hide-side',event=>{
         $('#modal-side').modal('hide');
         $('body').removeClass('modal-open');
         $('.modal-backdrop').remove();
     })
+
+    // jQuery(document).ready(function($) {
+    //         $("#basic-modal").on("hide.bs.modal", (event) => {
+    //             console.log('hidden');
+    //         });
+
+    //     });
+
+
+
+
 
 
     </script>

@@ -1,14 +1,15 @@
 <div>
     <div class="form-row">
         <div class="form-group col-md-1">
-            <select class="form-control select2" id="simple-select2" wire:model="filter">
-                <option value="file">Private</option>
-                <option value="folder">Public</option>
+            <select class="form-control" wire:model="filter">
+                <option value='0'>Show All</option>
+                <option value="private">Private</option>
+                <option value="public">Public</option>
             </select>
         </div>
         <div class="form-group col-md-10">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+                <input type="text" class="form-control" wire:model="search" placeholder="Search" aria-label="Search"
                     aria-describedby="Searh">
                 <div class="input-group-append">
                     <button class="btn btn-primary" type="submit" id="button-addon2">Cari</button>
@@ -36,22 +37,27 @@
             {{ $baseFolders->links() }}
         </div>
         {{-- <x-modal.side-modal></x-modal.side-modal> --}}
-        <livewire:component.detail-panel></livewire:component.detail-panel>
 
-        {{-- <livewire:component.detail-panel></livewire:component.detail-panel> --}}
     </div>
 
     @if($modal =="create")
-    <livewire:pages.dashboard.create-folder></livewire:pages.dashboard.create-folder>
+    <livewire:component.crud-modal.create></livewire:component.crud-modal.create>
 
     @elseif($modal=="rename")
-    <livewire:pages.dashboard.rename-folder></livewire:pages.dashboard.rename-folder>
+    <livewire:component.crud-modal.rename></livewire:component.crud-modal.rename>
 
     @elseif($modal =="manage")
-    <livewire:pages.dashboard.manage-folder></livewire:pages.dashboard.manage-folder>
+    <livewire:component.crud-modal.manage></livewire:component.crud-modal.manage>
 
     @elseif($modal =="delete")
-    <livewire:pages.dashboard.delete-folder></livewire:pages.dashboard.delete-folder>
+    <livewire:component.crud-modal.delete></livewire:component.crud-modal.delete>
+
+    @elseif($modal =="detail")
+    <livewire:component.detail-panel></livewire:component.detail-panel>
+
+    @elseif($modal =="request")
+    <livewire:component.request-access></livewire:component.request-access>
+
     @endif
 
 </div>
