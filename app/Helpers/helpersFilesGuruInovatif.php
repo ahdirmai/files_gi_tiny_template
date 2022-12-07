@@ -70,3 +70,29 @@ if (!function_exists('checkAccessEnterFolder')) {
         }
     }
 }
+
+if (!function_exists('checkCreateContent')) {
+    function checkCreateContent($slug)
+    {
+        $folder = getFolder($slug);
+
+
+        if ($folder->owner_id == auth()->user()->id) {
+            return true;
+        } else {
+            if ($folder->access_type == "public") {
+                return true;
+            } else {
+                if ($folder->accesses) {
+                    foreach ($folder->accesses as $access) {
+                        if (auth()->user()->id == $access->user_id && $access->permission_id == 2 && $access->status == "accept") {
+                            return true;
+                        }
+                    }
+                } else {
+                    return false;
+                }
+            }
+        }
+    }
+}

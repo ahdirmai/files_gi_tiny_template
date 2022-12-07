@@ -22,9 +22,14 @@ class Access extends Model
         return $this->belongsTo(Permission::class);
     }
 
+    public function accessable()
+    {
+        return $this->morphTo();
+    }
+
     public function content()
     {
-        return $this->belongsTo(Content::class);
+        return $this->belongsTo(Content::class, '', '');
     }
 
     public function permissions()

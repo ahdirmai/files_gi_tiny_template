@@ -9,8 +9,8 @@
     </x-slot>
     <form enctype="multipart/form-data">
         <x-slot name="content">
+            @if($createType=="folder")
             <div class="form-group">
-                @if($createType=="folder")
                 <h6>Folder Name</h6>
                 <div class="input-group mb-2">
                     <div class="input-group-prepend">
@@ -24,16 +24,20 @@
                     <input type="text" wire:model="name" class="form-control" id="name" name="name">
                 </div>
             </div>
+            @elseif($createType=="file")
             <div class="form-group">
-                @elseif($createType=="file")
                 <h6>File Name</h6>
-                @elseif($createType =="url")
-                <h6>URL Title</h6>
                 <div class="input-group mb-2">
                     <input type="text" wire:model="name" class="form-control" id="name" name="name">
                 </div>
             </div>
 
+            @elseif($createType =="url")
+            <div class="form-group">
+                <h6>URL Title</h6>
+                <input type="text" wire:model="name" class="form-control" id="name" name="name">
+
+            </div>
             <div class="input-group mb-2">
                 <div class="input-group mb-2">
                     <div class="input-group-prepend">

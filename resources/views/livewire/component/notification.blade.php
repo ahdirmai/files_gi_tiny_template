@@ -17,7 +17,7 @@
                 <p class="text-small">
                     <strong>{{ $item->user->name }}</strong> requesting access to {{
                     $item->permission->name }} a
-                    Base folder named
+                    Base folder named {{ $item->accessable->name }}
                 </p>
                 <div class="d-flex justify-content-between">
                     <div class="text-small px-auto">
@@ -58,7 +58,7 @@
                 <p class="text-small">
                     <strong>{{ $item->user->name }}</strong> requesting access to {{
                     $item->permission->name }} a
-                    folder named
+                    folder named {{ $item->accessable->name }}
                 </p>
                 <div class="d-flex justify-content-between">
                     <div class="text-small px-auto">
@@ -98,7 +98,7 @@
                 <p class="text-small">
                     <strong>{{ $item->user->name }}</strong> requesting access to {{
                     $item->permission->name }} a
-                    Document named
+                    Document named {{ $item->accessable->name }}
                 </p>
                 <div class="d-flex justify-content-between">
                     <div class="text-small px-auto">

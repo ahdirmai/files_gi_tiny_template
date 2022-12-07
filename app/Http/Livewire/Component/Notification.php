@@ -48,6 +48,13 @@ class Notification extends Component
     public function showNotificaiton($user_id)
     {
         $this->user_id = $user_id;
+        // $folder = Access::where('accessable_type', 'App\Models\Content')->whereIn('accessable_id', function ($query) {
+        //     $query->select('id')
+        //         ->from(with(new Content())->getTable())
+        //         ->where('owner_id', $this->user_id)
+        //         ->where('type', 'folder');
+        // })->where('status', 'pending')->get();
+        // dd($folder->first()->accessable);
     }
 
     public function accept($id)

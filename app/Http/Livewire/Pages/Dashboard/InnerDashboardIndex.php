@@ -55,9 +55,13 @@ class InnerDashboardIndex extends Component
     // Call the Modall
     public function createFolder($type)
     {
-        $this->modal = "create";
-        $this->emit('setUploadType', $type);
-        $this->dispatchBrowserEvent('show-form');
+        if (checkCreateContent($this->slug)) {
+            $this->modal = "create";
+            $this->emit('setUploadType', $type);
+            $this->dispatchBrowserEvent('show-form');
+        } else {
+            $this->getRequest($this->slug);
+        }
     }
 
     public function requestAccess()
@@ -102,6 +106,7 @@ class InnerDashboardIndex extends Component
 
     public function getFile($slug)
     {
+        // $this->modal = "info";
         $this->emit('setFile', $slug);
         $this->fileInfo();
     }

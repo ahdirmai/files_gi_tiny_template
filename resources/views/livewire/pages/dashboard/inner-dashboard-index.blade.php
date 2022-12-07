@@ -61,25 +61,6 @@
         </div>
     </div>
 
-    {{-- <div class="file-container">
-        <div class="file-panel mt-2">
-            <h6 class="mb-3">Folder</h6>
-            <div class="row my-4">
-                @foreach ($content_folder as $folder)
-                @include('components.folder')
-                @endforeach
-            </div>
-            {{ $content_folder->links() }}
-        </div>
-    </div> --}}
-    {{--
-    <div class="file-container">
-        <div class="file-panel mt-4">
-            @include('components.file')
-        </div>
-        {{ $content_file->links() }}
-    </div> --}}
-
 
     {{-- {{ $type }} --}}
     @if((count($content_folder) >= 1) || (count($content_file) >= 1) )
@@ -146,5 +127,7 @@
     @elseif($modal =="request")
     <livewire:component.request-access></livewire:component.request-access>
 
+    @elseif($modal=="fileInfo")
+    <livewire:pages.dashboard.info-file></livewire:pages.dashboard.info-file>
     @endif
 </div>
