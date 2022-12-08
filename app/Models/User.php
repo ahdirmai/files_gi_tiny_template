@@ -57,4 +57,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Access::class, 'user_id', 'id');
     }
+
+    public function initials()
+    {
+        $words = explode(" ", $this->name);
+        $initials = null;
+        foreach ($words as $w) {
+            $initials .= $w[0];
+        }
+        return strtoupper($initials);
+    }
 }

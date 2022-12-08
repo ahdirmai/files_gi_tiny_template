@@ -94,6 +94,19 @@
 
                     @if ($access_type =="private")
                     People with access
+                    <ul class="avatars-list mx-0">
+                        @foreach($haveAccess as $people)
+                        <li>
+                            <div class="circle circle-md bg-{{ $loop->iteration%2==0 ?'warning':'primary'}}"
+                                data-toggle="tooltip" title="{{ $people->user->name }} ">
+                                <p class="text-white mx-auto my-auto">
+                                    {{ $people->user->initials() }}
+                                </p>
+                            </div>
+                        </li>
+
+                        @endforeach
+                    </ul>
                     @endif
                 </div>
                 <!-- .tab-pane -->
@@ -159,4 +172,10 @@
     </x-slot>
     <x-slot name="footer">
     </x-slot>
+
+    <script>
+        $(document).ready(function(){
+          $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
 </x-modal.side-modal>
