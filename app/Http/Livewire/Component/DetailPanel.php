@@ -4,16 +4,21 @@ namespace App\Http\Livewire\Component;
 
 use App\Models\BaseFolders;
 use App\Models\Content;
+use Carbon\Carbon;
 use Livewire\Component;
 use Spatie\Activitylog\Models\Activity;
 
 class DetailPanel extends Component
 {
-    public $name, $owner, $access_type, $created_at, $updated_at, $type, $filename, $haveAccess, $slug, $activity;
+    public $name, $owner, $access_type, $created_at, $updated_at, $type, $filename, $haveAccess, $slug, $activity, $timeFilter = 0;
 
+    // public $text = '';
+
+    public $tab = 'detail';
     protected $listeners = [
         'setDetailFolder' => 'showDetailFolder'
     ];
+
     public function render()
     {
         return view('livewire.component.detail-panel');
@@ -40,9 +45,24 @@ class DetailPanel extends Component
 
     public function getActivity()
     {
-        // dd($this->slug);
+        if ($this->timeFilter == '0') {
+            $this->activity = Activity::where('properties->slug', $this->slug)->latest()->get();
+        } elseif ($this->timeFilter == '1') {
+            $this->activity = Activity::where('properties->slug', $this->slug)->whereDate('created_at', Carbon::today())->latest()->get();
+        } else {
+            $this->activity = Activity::where('properties->slug', $this->slug)->whereDate('created_at', Carbon::yesterday())->latest()->get();
+        }
+    }
+    public function changeEvent($value)
+    {
+        $this->timeFilter = $value;
+        $this->getActivity();
+    }
 
-        // $content = getFolder($this->slug);
-        $this->activity = Activity::where('properties->slug', $this->slug)->latest()->get();
+    public function setAct($value)
+    {
+        $this->tab = $value;
+        $this->timeFilter = "0";
+        $this->getActivity();
     }
 }
