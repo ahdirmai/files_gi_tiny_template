@@ -107,8 +107,12 @@ class InnerDashboardIndex extends Component
     public function getFile($slug)
     {
         // $this->modal = "info";
-        $this->emit('setFile', $slug);
-        $this->fileInfo();
+        if (checkAccessEnterFolder($slug)) {
+            $this->emit('setFile', $slug);
+            $this->fileInfo();
+        } else {
+            $this->getRequest($slug);
+        }
     }
 
 

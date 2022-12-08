@@ -20,16 +20,12 @@ class InfoFile extends Component
 
     public function showFileInfo($slug)
     {
-
-        // dd($slug);
         $folder = getFolder($slug);
-        // dd($folder->type);
         if ($folder->type == "url") {
             $this->url = $folder->url;
         } else {
             $this->url = "";
         }
-        // dd($this->url);
         $this->slug = $slug;
     }
 }

@@ -50,6 +50,7 @@
                         <a class="dropdown-item pl-2" type="button" wire:click="getDetail('{{ $file->slug }}')">
                             <x-heroicon-s-information-circle style="width:15px" class="ml-0 mr-2" />Detail
                         </a>
+                        @if (auth()->user()->id == $file->owner_id || auth()->user()->hasRole('admin'))
                         <a class="dropdown-item pl-2" type="button" wire:click="getRename('{{ $file->slug }}')">
                             <x-heroicon-s-pencil-square style="width:15px" class="ml-0 mr-2" />Rename
                         </a>
@@ -59,6 +60,37 @@
                         <a class="dropdown-item pl-2" type="button" wire:click="getDelete('{{ $file->slug }}')">
                             <x-heroicon-s-trash style="width:15px" class="ml-0 mr-2" />Delete
                         </a>
+                        @elseif($file->access_type=="private")
+                        <?php $param = "" ?>
+                        @foreach($file->accesses as $haveAccess)
+                        @if($haveAccess->user_id == auth()->user()->id && $haveAccess->status != 'reject')
+                        @if ($haveAccess->permission_id == "1")
+                        <?php $param = "1" ?>
+                        @else
+                        <?php $param = "2" ?>
+                        @endif
+                        @endif
+                        @endforeach
+                        @if($param == "1")
+                        {{-- <a class="dropdown-item pl-2" type="button" wire:click="">
+                            <x-heroicon-s-arrow-path style=" width:15px" class="ml-0" />
+                            Update {{ $param }}
+                        </a> --}}
+                        @elseif($param == "2")
+                        <a class="dropdown-item pl-2" type="button" wire:click="">
+                            <x-heroicon-s-arrow-path style=" width:15px" class="ml-0" />
+                            Update
+                        </a>
+                        @else
+                        <a class="dropdown-item pl-2" type="button" wire:click="getRequest('{{ $file->slug }}')">
+                            <x-heroicon-s-pencil-square style=" width:15px" class="ml-0" />
+                            Ask Request
+                        </a>
+                        @endif
+                        @endif
+
+
+
                     </div>
                 </div>
             </td>
