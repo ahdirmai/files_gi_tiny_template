@@ -6,11 +6,20 @@
         <li class="nav-item nav-notif">
             <a class="nav-link text-muted my-2" href="./#" wire:click="getNotificaiton" data-toggle="modal"
                 data-target=".modal-notif">
-                <span class="fe fe-bell fe-16"></span>
+                {{-- <span class="fe fe-bell fe-16"></span> --}}
+                <span>
+                    <x-heroicon-o-bell style="height: 20px"></x-heroicon-o-bell>
+                </span>
+                @if ($isNotification)
+                <span class="dot dot-md bg-success"></span>
+                @else
+
+                @endif
             </a>
         </li>
         <li class="nav-item ml-2">
             <div class="d-flex flex-column">
+                {{-- {{ $isNotification }} --}}
                 <div class="pt-1"> <strong>{{ $name }}</strong></div>
                 <div class="">{{ @$division }}</div>
             </div>
