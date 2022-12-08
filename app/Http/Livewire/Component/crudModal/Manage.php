@@ -84,6 +84,7 @@ class Manage extends Component
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($folder)
+                ->withProperties(['slug' => $folder->slug])
                 ->log('Manage Content');
         }
     }

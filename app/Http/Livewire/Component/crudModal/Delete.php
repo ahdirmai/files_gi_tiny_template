@@ -43,6 +43,7 @@ class Delete extends Component
         activity()
             ->causedBy(auth()->user())
             ->performedOn($folder)
+            ->withProperties(['slug' => $folder->slug])
             ->log('Delete Content');
     }
 }

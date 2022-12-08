@@ -92,6 +92,7 @@ class Create extends Component
                 activity()
                     ->causedBy(auth()->user())
                     ->performedOn($doneCreate)
+                    ->withProperties(['slug' => $doneCreate->slug])
                     ->log('Create Folder');
             }
         } else {
@@ -115,6 +116,7 @@ class Create extends Component
                 activity()
                     ->causedBy(auth()->user())
                     ->performedOn($folder)
+                    ->withProperties(['slug' => $folder->slug])
                     ->log('Created Folder');
             };
         };
@@ -163,6 +165,7 @@ class Create extends Component
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($doneUploadFile)
+                ->withProperties(['slug' => $doneUploadFile->slug])
                 ->log('Created file');
         }
     }
@@ -206,6 +209,7 @@ class Create extends Component
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($doneUploadFile)
+                ->withProperties(['slug' => $doneUploadFile->slug])
                 ->log('Created URL');
         }
     }
