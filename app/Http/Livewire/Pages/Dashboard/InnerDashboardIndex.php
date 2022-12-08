@@ -49,6 +49,7 @@ class InnerDashboardIndex extends Component
         'storeFolderManage' => 'handleManaged',
         'folderDeleted' => 'handleFolderDeleted',
         'storeRequestAccess' => 'handleRequestAccess',
+        'URLUpdated' => 'handleURLUpdated'
 
     ];
 
@@ -91,6 +92,12 @@ class InnerDashboardIndex extends Component
     public function fileInfo()
     {
         $this->modal = "fileInfo";
+        $this->dispatchBrowserEvent('show-form');
+    }
+
+    public function UpdateContent()
+    {
+        $this->modal = "updateContent";
         $this->dispatchBrowserEvent('show-form');
     }
     // End call Modal
@@ -143,6 +150,12 @@ class InnerDashboardIndex extends Component
         $this->requestAccess();
     }
 
+    public function getContent($slug)
+    {
+        $this->emit('setContent', $slug);
+        $this->UpdateContent();
+    }
+
     // End get Data
 
 
@@ -170,6 +183,12 @@ class InnerDashboardIndex extends Component
     {
         $this->handleResetModal();
         $flasher->addSuccess('You have successfully Added File', '<h4> <b>  File Added!</b></h4>');
+    }
+
+    public function handleURLUpdated(SweetAlertFactory $flasher)
+    {
+        $this->handleResetModal();
+        $flasher->addSuccess('You have successfully Update URL', '<h4> <b>  URL Updated</b></h4>');
     }
 
     public function handleURLStored(SweetAlertFactory $flasher)

@@ -57,7 +57,7 @@
                         <a class="dropdown-item pl-2" type="button" wire:click="getManage('{{ $file->slug }}')">
                             <x-heroicon-s-cog-8-tooth style="width:15px" class="ml-0 mr-2" />Manage
                         </a>
-                        <a class="dropdown-item pl-2" type="button" wire:click="">
+                        <a class="dropdown-item pl-2" type="button" wire:click="getContent('{{ $file->slug }}')">
                             <x-heroicon-s-arrow-path style=" width:15px" class="ml-0 mr-2" />Update
                         </a>
                         <a class="dropdown-item pl-2" type="button" wire:click="getDelete('{{ $file->slug }}')">
@@ -75,12 +75,8 @@
                         @endif
                         @endforeach
                         @if($param == "1")
-                        {{-- <a class="dropdown-item pl-2" type="button" wire:click="">
-                            <x-heroicon-s-arrow-path style=" width:15px" class="ml-0" />
-                            Update {{ $param }}
-                        </a> --}}
                         @elseif($param == "2")
-                        <a class="dropdown-item pl-2" type="button" wire:click="">
+                        <a class="dropdown-item pl-2" type="button" wire:click="getContent('{{ $file->slug }}')">
                             <x-heroicon-s-arrow-path style=" width:15px" class="ml-0 mr-2" />
                             Update
                         </a>

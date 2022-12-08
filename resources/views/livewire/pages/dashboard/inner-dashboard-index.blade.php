@@ -129,5 +129,8 @@
 
     @elseif($modal=="fileInfo")
     <livewire:pages.dashboard.info-file></livewire:pages.dashboard.info-file>
+
+    @elseif($modal=="updateContent")
+    <livewire:component.update-content></livewire:component.update-content>
     @endif
 </div>
