@@ -7,6 +7,9 @@
             <div class="my-auto mr-5 d-flex justify-content-end">
 
                 <div class="row section-header-breadcrumb">
+                    <div class="breadcrumb-item">
+                        <a href="{{ route('dashboard') }}">Dashboard</a>
+                    </div>
                     @foreach ($breadcrumbs as $breadcrumb )
                     @if($folder->slug != $breadcrumb['slug'])
                     <div class="breadcrumb-item"><a href="{{ route('dashboard.inner',$breadcrumb['slug']) }}">{{

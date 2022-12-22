@@ -23,6 +23,11 @@
                     </div>
                     <input type="text" wire:model="name" class="form-control" id="name" name="name">
                 </div>
+                @error('name')
+                <div class="text-danger text-small"> {{ $message }} </div>
+
+                @enderror
+
             </div>
             @elseif($createType=="file")
             <div class="form-group">
@@ -30,12 +35,20 @@
                 <div class="input-group mb-2">
                     <input type="text" wire:model="name" class="form-control" id="name" name="name">
                 </div>
+                @error('name')
+                <div class="text-danger text-small"> {{ $message }} </div>
+
+                @enderror
             </div>
 
             @elseif($createType =="url")
             <div class="form-group">
                 <h6>URL Title</h6>
                 <input type="text" wire:model="name" class="form-control" id="name" name="name">
+                @error('name')
+                <div class="text-danger text-small"> {{ $message }} </div>
+
+                @enderror
 
             </div>
             <div class="input-group mb-2">
@@ -48,8 +61,13 @@
                             </span>
                         </div>
                     </div>
-                    <input type="text" wire:model="url" class="form-control" id="name" name="name">
+                    <input type="text" wire:model="url" class="form-control" id="url" name="url">
                 </div>
+                @error('url')
+                <div class="text-danger text-small"> {{ $message }} </div>
+
+                @enderror
+
             </div>
 
             {{-- {{ $url }} --}}
@@ -115,10 +133,14 @@
                 x-on:livewire-upload-progress="progress = $event.detail.progress">
                 <!-- File Input -->
                 <div class="form-group mb-3">
-                    <label for="customFile">Upload File</label>
+                    <label for="customFile">Upload File (Max 10mb)</label>
                     <div class="custom-file">
-                        <input type="file" id="customFile" wire:model="file">
+                        <input type="file" id="customFile" wire:model="file" name="file">
                     </div>
+                    @error('file')
+                    <div class="text-danger text-small"> {{ $message }} </div>
+
+                    @enderror
                 </div>
 
                 <!-- Progress Bar -->

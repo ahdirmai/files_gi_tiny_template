@@ -23,6 +23,10 @@
                     </div>
                     <input type="text" wire:model="name" class="form-control" id="name" name="name">
                 </div>
+                @error('name')
+                <div class="text-danger text-small"> {{ $message }} </div>
+
+                @enderror
             </div>
             @elseif($type=="file")
             <div class="form-group">
@@ -30,13 +34,19 @@
                 <div class="input-group mb-2">
                     <input type="text" wire:model="name" class="form-control" id="name" name="name">
                 </div>
+                @error('name')
+                <div class="text-danger text-small"> {{ $message }} </div>
+
+                @enderror
             </div>
 
             @elseif($type =="url")
             <div class="form-group">
                 <h6>URL Title</h6>
                 <input type="text" wire:model="name" class="form-control" id="name" name="name">
-
+                @error('name')
+                <div class="text-danger text-small"> {{ $message }} </div>
+                @enderror
             </div>
 
             {{-- {{ $url }} --}}
