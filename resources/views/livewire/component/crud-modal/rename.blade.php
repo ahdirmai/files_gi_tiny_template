@@ -1,7 +1,7 @@
 <x-modal.basic-modal>
     <x-slot name="header">
         <h5 class="modal-title">
-            Rename Folder
+            Rename {{ $type }}
         </h5>
         <button type="button" wire:click="resetModal" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -9,6 +9,7 @@
     </x-slot>
     <form>
         <x-slot name="content">
+            @if($type=="folder")
             <div class="form-group">
                 <h6>Folder Name</h6>
                 <div class="input-group mb-2">
@@ -23,6 +24,23 @@
                     <input type="text" wire:model="name" class="form-control" id="name" name="name">
                 </div>
             </div>
+            @elseif($type=="file")
+            <div class="form-group">
+                <h6>File Name</h6>
+                <div class="input-group mb-2">
+                    <input type="text" wire:model="name" class="form-control" id="name" name="name">
+                </div>
+            </div>
+
+            @elseif($type =="url")
+            <div class="form-group">
+                <h6>URL Title</h6>
+                <input type="text" wire:model="name" class="form-control" id="name" name="name">
+
+            </div>
+
+            {{-- {{ $url }} --}}
+            @endif
         </x-slot>
 
         <x-slot name="footer">

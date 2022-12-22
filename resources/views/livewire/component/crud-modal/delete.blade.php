@@ -1,7 +1,7 @@
 <x-modal.basic-modal>
     <x-slot name="header">
         <h5 class="modal-title">
-            Delete Folder
+            Delete {{ $type }} {{ $name }}
         </h5>
         <button type="button" wire:click="resetModal" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>

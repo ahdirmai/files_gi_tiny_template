@@ -106,19 +106,42 @@
             @endif
 
             @if($createType=="file")
-            <div class="form-group mb-3">
-                <label for="customFile">Upload File</label>
-                <div class="custom-file">
-                    <input type="file" id="customFile" wire:model="file">
+
+
+            <div x-data="{ isUploading: false, progress: 0, hasUploaded:false }"
+                x-on:livewire-upload-start="isUploading = true"
+                x-on:livewire-upload-finish="{isUploading = false, hasUploaded = true}"
+                x-on:livewire-upload-error="isUploading = false"
+                x-on:livewire-upload-progress="progress = $event.detail.progress">
+                <!-- File Input -->
+                <div class="form-group mb-3">
+                    <label for="customFile">Upload File</label>
+                    <div class="custom-file">
+                        <input type="file" id="customFile" wire:model="file">
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div x-show="isUploading">
+                    <div class="mb-3 text-center">
+                        <div class="spinner-border mr-3 text-success" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div x-show="hasUploaded" class="text-center">
+                    <div class="mb-3">
+                        <div class="mr-3 text-success" role="status">
+                            <x-heroicon-o-check style="height: 30px"></x-heroicon-o-check>Success
+                        </div>
+                    </div>
                 </div>
             </div>
+
+
             @endif
 
-            @if ($file)
-
-            {{-- <img src="{{ $file}}"> --}}
-            {{ $file }}
-            @endif
         </x-slot>
 
         <x-slot name="footer">

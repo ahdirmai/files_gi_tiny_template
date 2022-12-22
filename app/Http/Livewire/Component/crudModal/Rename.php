@@ -9,43 +9,55 @@ use Livewire\Component;
 class Rename extends Component
 {
 
-    public $name, $slug;
+    public $name, $slug, $type = "";
 
     protected $listeners = [
-        'setFolderName' => 'showFolderName'
+        'setContentName' => 'showContentName'
     ];
     public function render()
     {
         return view('livewire.component.crud-modal.rename');
     }
-    public function showFolderName($folder)
+
+    public function showContentName($slug)
     {
-        $this->name = $folder['name'];
-        $this->slug = $folder['slug'];
+
+        $content = BaseFolders::where('slug', $slug)->first();
+        // dd($content);
+        if (!$content) {
+            $content = Content::where('slug', $slug)->first();
+            // dd($content->type);
+            $this->type = $content->type;
+        };
+        $this->name = $content->name;
+        $this->slug = $content->slug;
     }
+
+
 
     public function renameFolder()
     {
-        $folder = BaseFolders::where('slug', $this->slug)->first();
-        if (!$folder) {
-            $folder = Content::where('slug', $this->slug)->first();
+        $content = BaseFolders::where('slug', $this->slug)->first();
+        if (!$content) {
+            $content = Content::where('slug', $this->slug)->first();
         };
+
         $this->validate([
             'name' => 'required|min:3',
         ]);
 
-        $done = $folder->update([
+        $done = $content->update([
             'name' => $this->name,
         ]);
 
         if ($done) {
             $this->resetModal();
-            $this->emit('folderRenamed');
+            $this->emit('contentRenamed', $this->type);
             activity()
                 ->causedBy(auth()->user())
-                ->performedOn($folder)
-                ->withProperties(['slug' => $folder->slug])
-                ->log('Rename Content');
+                ->performedOn($content)
+                ->withProperties(['slug' => $content->slug])
+                ->log('Rename ' . $this->type);
         };
     }
 

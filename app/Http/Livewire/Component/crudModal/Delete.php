@@ -9,7 +9,7 @@ use Livewire\Component;
 class Delete extends Component
 {
 
-    public $slug;
+    public $slug, $name, $type;
     protected $listeners = [
         'deleteFolder' => 'setDeleteFolder'
     ];
@@ -26,6 +26,15 @@ class Delete extends Component
 
     public function setDeleteFolder($slug)
     {
+        $content = BaseFolders::where('slug', $slug)->first();
+
+        if (!$content) {
+            $content = Content::where('slug', $slug)->first();
+            $this->type = $content->type;
+        } else {
+            $this->type = "folder";
+        }
+        $this->name = $content->name;
         $this->slug = $slug;
     }
 

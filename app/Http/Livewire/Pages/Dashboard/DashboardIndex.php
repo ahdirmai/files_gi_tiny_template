@@ -97,8 +97,8 @@ class DashboardIndex extends Component
 
     public function getRename($slug)
     {
-        $folder = BaseFolders::where('slug', $slug)->first();
-        $this->emit('setFolderName', $folder);
+        // $folder = BaseFolders::where('slug', $slug)->first();
+        $this->emit('setFolderName', $slug);
         $this->renameFolder();
     }
 

@@ -1,7 +1,7 @@
 <x-modal.basic-modal>
     <x-slot name="header">
         <h5 class="modal-title">
-            Manage Folder {{ $name }}
+            Manage {{ $type }} {{ $name }}
         </h5>
         <button type="button" wire:click="resetModal" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -12,19 +12,19 @@
             <div class="access-radio">
                 <h6>General Access</h6>
                 <div class="custom-control custom-radio">
-                    <input type="radio" wire:model="folderAccessType" id="is-private1" name="folderAccessType"
+                    <input type="radio" wire:model="contentAccessType" id="is-private1" name="folderAccessType"
                         class="custom-control-input" value="public">
                     <label class="custom-control-label" for="is-private1">Public</label>
                     <p>This project would be available to anyone who has the link</p>
                 </div>
                 <div class="custom-control custom-radio">
-                    <input type="radio" wire:model="folderAccessType" id="is-private2" class="custom-control-input"
+                    <input type="radio" wire:model="contentAccessType" id="is-private2" class="custom-control-input"
                         value="private" name="folderAccessType">
                     <label class="custom-control-label" for="is-private2">Privates</label>
                     <p>Only people with access can open with the link</p>
                 </div>
             </div>
-            @if($folderAccessType == "private")
+            @if($contentAccessType == "private")
             <div class="form-group" id="formPrivate">
                 <h6>Invite User</h6>
                 <div class="form-group">

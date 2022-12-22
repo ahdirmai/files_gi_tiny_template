@@ -11,7 +11,7 @@ use Livewire\Component;
 
 class Manage extends Component
 {
-    public $name, $folderAccessType, $slug, $invitedUsers, $invitedAccess = "1", $users;
+    public $name, $contentAccessType, $slug, $invitedUsers, $invitedAccess = "1", $users, $type;
     public $userHaveAccess, $idUserHaveAccess;
 
     protected $listeners = [
@@ -33,18 +33,22 @@ class Manage extends Component
 
     public function showFolderManage($slug)
     {
-        $folder = BaseFolders::where('slug', $slug)->first();
-        if (!$folder) {
-            $folder = Content::where('slug', $slug)->first();
+        $content = BaseFolders::where('slug', $slug)->first();
+
+        // dd($)
+        if (!$content) {
+            $content = Content::where('slug', $slug)->first();
+            $this->type = $content->type;
+        } else {
+            $this->type = "folder";
         }
 
-        $this->name = $folder->name;
-        $this->slug = $folder->slug;
-        $this->folderAccessType = $folder->access_type;
-        $this->userHaveAccess = $folder->accesses->where('status', 'accept');
-        $this->idUserHaveAccess = $folder->accesses->where('status', 'accept')->pluck('user_id');
-
-
+        $this->name = $content->name;
+        $this->slug = $content->slug;
+        $this->contentAccessType = $content->access_type;
+        $this->userHaveAccess = $content->accesses->where('status', 'accept');
+        $this->idUserHaveAccess = $content->accesses->where('status', 'accept')->pluck('user_id');
+        // $this->type = $content->type;
         $this->users = User::whereHas('roles', function ($q) {
             $q->where('name', 'user');
         })->where('id', '!=', auth()->user()->id)
@@ -56,18 +60,18 @@ class Manage extends Component
     public function manageFolder()
     {
         $this->validate([
-            'folderAccessType' => 'required'
+            'contentAccessType' => 'required'
         ]);
 
-        $folder = getFolder($this->slug);
+        $content = getFolder($this->slug);
 
-        $done = $folder->update([
-            'access_type' => $this->folderAccessType
+        $done = $content->update([
+            'access_type' => $this->contentAccessType
         ]);
 
         if ($done) {
-            if ($this->folderAccessType == "public") {
-                foreach ($folder->accesses as $access) {
+            if ($this->contentAccessType == "public") {
+                foreach ($content->accesses as $access) {
                     $access->forceDelete();
                 }
             } else {
@@ -76,15 +80,15 @@ class Manage extends Component
                     $dataInvited->permission_id = $this->invitedAccess;
                     $dataInvited->user_id = $this->invitedUsers;
                     $dataInvited->status = 'accept';
-                    $done = $folder->accesses()->save($dataInvited);
+                    $done = $content->accesses()->save($dataInvited);
                 }
             }
             $this->resetModal();
-            $this->emit('storeFolderManage');
+            $this->emit('storeFolderManage', $this->type);
             activity()
                 ->causedBy(auth()->user())
-                ->performedOn($folder)
-                ->withProperties(['slug' => $folder->slug])
+                ->performedOn($content)
+                ->withProperties(['slug' => $content->slug])
                 ->log('Manage Content');
         }
     }

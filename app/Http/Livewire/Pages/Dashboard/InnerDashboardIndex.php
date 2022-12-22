@@ -45,7 +45,8 @@ class InnerDashboardIndex extends Component
         'folderStored' => 'handleStored',
         'fileStored' => 'handleFileStored',
         'urlStored' => 'handleURLStored',
-        'folderRenamed' => 'handleRenamed',
+        // 'folderRenamed' => 'handleRenamed',
+        'contentRenamed' => 'handleRenamedContent',
         'storeFolderManage' => 'handleManaged',
         'folderDeleted' => 'handleFolderDeleted',
         'storeRequestAccess' => 'handleRequestAccess',
@@ -71,7 +72,7 @@ class InnerDashboardIndex extends Component
         $this->dispatchBrowserEvent('show-form');
     }
 
-    public function renameFolder()
+    public function renameContent()
     {
         $this->modal = "rename";
         $this->dispatchBrowserEvent('show-form');
@@ -126,9 +127,9 @@ class InnerDashboardIndex extends Component
 
     public function getRename($slug)
     {
-        $folder = getFolder($slug);
-        $this->emit('setFolderName', $folder);
-        $this->renameFolder();
+        // $folder = getFolder($slug);
+        $this->emit('setContentName', $slug);
+        $this->renameContent();
     }
 
     public function getManage($slug)
@@ -197,22 +198,48 @@ class InnerDashboardIndex extends Component
         $flasher->addSuccess('You have successfully Added URL', '<h4> <b>  URL Added!</b></h4>');
     }
 
-    public function handleRenamed(SweetAlertFactory $flasher)
+    // public function handleRenamed(SweetAlertFactory $flasher)
+    // {
+    //     $this->handleResetModal();
+    //     $flasher->addSuccess('You have successfully Rename Folder', '<h4> <b>  Rename Folder Success!!</b></h4>');
+    // }
+
+    public function handleRenamedContent($type, SweetAlertFactory $flasher)
     {
         $this->handleResetModal();
-        $flasher->addSuccess('You have successfully Rename Folder', '<h4> <b>  Rename Folder Success!!</b></h4>');
+        if ($type == "url") {
+            $flasher->addSuccess('You have successfully Rename URL', '<h4> <b>  Rename URL Success!!</b></h4>');
+        } elseif ($type == "file") {
+            $flasher->addSuccess('You have successfully Rename File', '<h4> <b>  Rename File Success!!</b></h4>');
+        } else {
+            $flasher->addSuccess('You have successfully Rename Folder', '<h4> <b>  Rename Folder Success!!</b></h4>');
+        }
     }
 
-    public function handleManaged(SweetAlertFactory $flasher)
+
+    public function handleManaged($type, SweetAlertFactory $flasher)
     {
         $this->handleResetModal();
-        $flasher->addSuccess('You have successfully updated your Folder', '<h4> <b>  Folder Updated!!</b></h4>');
+        if ($type == "url") {
+            $flasher->addSuccess('You have successfully updated your URL', '<h4> <b>  URL Updated!!</b></h4>');
+        } elseif ($type == "file") {
+            $flasher->addSuccess('You have successfully updated your File', '<h4> <b>  File Updated!!</b></h4>');
+        } else {
+            $flasher->addSuccess('You have successfully updated your Folder', '<h4> <b>  Folder Updated!!</b></h4>');
+        }
     }
 
-    public function handleFolderDeleted(SweetAlertFactory $flasher)
+    public function handleFolderDeleted($type, SweetAlertFactory $flasher)
     {
         $this->handleResetModal();
-        $flasher->addSuccess('You have successfully Delete your Folder', '<h4> <b> Folder Deleted!</b></h4>');
+        if ($type == "url") {
+            $flasher->addSuccess('You have successfully Delete your URL', '<h4> <b> URL Deleted!</b></h4>');
+        } elseif ($type == "file") {
+            $flasher->addSuccess('You have successfully Delete your File', '<h4> <b> File Deleted!</b></h4>');
+        } else {
+            $flasher->addSuccess('You have successfully Delete your Folder', '<h4> <b> Folder Deleted!</b></h4>');
+        }
+        // $this->handleResetModal();
     }
     // End Handle
 

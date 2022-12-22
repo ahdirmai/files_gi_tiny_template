@@ -3,11 +3,13 @@
 namespace App\Http\Livewire\Component;
 
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class UpdateContent extends Component
 {
 
-    public $slug, $name, $url, $type;
+    use WithFileUploads;
+    public $slug, $name, $url, $type, $content, $newFile, $oldFile;
 
     protected $listeners = [
         'setContent' => 'showUpdateContent'
@@ -20,12 +22,16 @@ class UpdateContent extends Component
     public function showUpdateContent($slug)
     {
         $content = getFolder($slug);
+        $this->content = $content;
         $this->slug = $slug;
-
         $this->name = $content->name;
         $this->url = $content->url;
         $this->type = $content->type;
-        // dd($slug);
+        // dd($content->getMedia($content->contentable->slug)->first());
+        if ($this->type == "file") {
+            $this->oldFile =  $content->getMedia($content->contentable->slug)->first();
+            // dd($this->oldFile->file_name);
+        }
     }
 
     public function updateURL()
