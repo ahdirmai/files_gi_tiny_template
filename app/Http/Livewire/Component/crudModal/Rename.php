@@ -42,23 +42,28 @@ class Rename extends Component
             $content = Content::where('slug', $this->slug)->first();
         };
 
+        $oldName = $content->name;
         $this->validate([
             'name' => 'required|min:3',
         ]);
 
-        $done = $content->update([
-            'name' => $this->name,
-        ]);
+        if ($this->name != $oldName) {
+            $done = $content->update([
+                'name' => $this->name,
+            ]);
 
-        if ($done) {
-            $this->resetModal();
-            $this->emit('contentRenamed', $this->type);
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($content)
-                ->withProperties(['slug' => $content->slug])
-                ->log('Rename ' . $this->type);
-        };
+            if ($done) {
+                $this->resetModal();
+                $this->emit('contentRenamed', $this->type);
+                activity()
+                    ->causedBy(auth()->user())
+                    ->performedOn($content)
+                    ->withProperties(['slug' => $content->slug, 'oldName' => $oldName])
+                    ->log('Rename ' . $this->type);
+            };
+        }
+        // $this->emit('contentRenamed', $this->type);
+        $this->resetModal();
     }
 
     public function resetModal()

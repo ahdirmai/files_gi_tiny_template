@@ -60,6 +60,10 @@
                         <a class="dropdown-item pl-2" type="button" wire:click="getContent('{{ $file->slug }}')">
                             <x-heroicon-s-arrow-path style=" width:15px" class="ml-0 mr-2" />Update
                         </a>
+
+                        <a class="dropdown-item pl-2" type="button" wire:click="getVersion('{{ $file->slug }}')">
+                            <x-heroicon-s-arrow-path style=" width:15px" class="ml-0 mr-2" />Show Versioning
+                        </a>
                         <a class="dropdown-item pl-2" type="button" wire:click="getDelete('{{ $file->slug }}')">
                             <x-heroicon-s-trash style="width:15px" class="ml-0 mr-2" />Delete
                         </a>
@@ -79,6 +83,9 @@
                         <a class="dropdown-item pl-2" type="button" wire:click="getContent('{{ $file->slug }}')">
                             <x-heroicon-s-arrow-path style=" width:15px" class="ml-0 mr-2" />
                             Update
+                        </a>
+                        <a class="dropdown-item pl-2" type="button" wire:click="getVersion('{{ $file->slug }}')">
+                            <x-heroicon-s-arrow-path style=" width:15px" class="ml-0 mr-2" />Show Versioning
                         </a>
                         @else
                         <a class="dropdown-item pl-2" type="button" wire:click="getRequest('{{ $file->slug }}')">

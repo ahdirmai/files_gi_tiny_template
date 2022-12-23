@@ -135,5 +135,9 @@
 
     @elseif($modal=="updateContent")
     <livewire:component.update-content></livewire:component.update-content>
+
+    @elseif($modal=="version")
+    <livewire:component.show-version></livewire:component.show-version>
     @endif
+
 </div>

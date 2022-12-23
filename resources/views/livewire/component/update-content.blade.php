@@ -40,8 +40,12 @@
                         x-on:livewire-upload-progress="progress = $event.detail.progress">
                         <div class="form-group">
                             <div class="custom-file">
-                                <input type="file" class="form-control" style="border: 0" wire:model="newFile">
+                                <input type="file" class="form-control" style="border: 0" wire:model="newFile"
+                                    name="newFile">
                             </div>
+                            @error('newFile')
+                            <p class="text-small text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                         {{-- {{ $oldFile }} --}}
 
@@ -65,13 +69,7 @@
                 </div>
             </div>
 
-
-
-
-
-
             @endif
-
         </x-slot>
 
         <x-slot name="footer">
@@ -80,7 +78,8 @@
 
             <button type="submit" wire:click="updateURL()" class="btn btn-primary">Update</button>
             @else
-            File
+            <button type="submit" wire:click="updateFile()" class="btn btn-primary">Update</button>
+
             @endif
         </x-slot>
     </form>

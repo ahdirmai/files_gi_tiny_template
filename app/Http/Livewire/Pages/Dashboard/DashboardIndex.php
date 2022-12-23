@@ -95,6 +95,8 @@ class DashboardIndex extends Component
     }
 
 
+
+
     public function getRename($slug)
     {
         // $folder = BaseFolders::where('slug', $slug)->first();
@@ -128,6 +130,8 @@ class DashboardIndex extends Component
         $this->emit('deleteFolder', $slug);
         $this->deleteFolder();
     }
+
+
 
     public function handleResetModal()
     {

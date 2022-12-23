@@ -40,6 +40,7 @@ class UpdateContent extends Component
             'url' => 'required|min:3'
         ]);
         $content = getFolder($this->slug);
+        $oldUrl = $content->url;
         $doneUpdate =  $content->update([
             'url' => $this->url
         ]);
@@ -50,14 +51,27 @@ class UpdateContent extends Component
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($content)
-                ->withProperties(['slug' => $content->slug])
+                ->withProperties(['slug' => $content->slug, 'oldUrl' => $oldUrl, 'newUrl' => $content->url])
                 ->log('Update URL');
         }
+    }
+    public function updateFile()
+    {
+        $this->validate([
+            'newFile' => 'required'
+        ]);
     }
 
     public function resetModal()
     {
         $this->name = "";
         $this->emit('resetModal');
+    }
+
+    public function getVersion()
+
+    {
+        $this->dispatchBrowserEvent('show-version');
+        $this->emit('showVersion', $this->slug);
     }
 }

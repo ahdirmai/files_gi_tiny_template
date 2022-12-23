@@ -43,14 +43,8 @@
         @yield('content')
         <!-- main -->
 
+
     </div>
-
-
-
-    <!-- .wrapper -->
-
-
-
 
 
 
@@ -93,6 +87,11 @@
     <script>
         window.addEventListener('show-form',event=>{
             $('#basic-modal').modal('show');
+        });
+
+        window.addEventListener('show-version',event=>{
+            console.log('disini');
+            $('#version-modal').modal('show');
         });
 
     window.addEventListener('hide-form',event=>{

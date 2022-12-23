@@ -101,6 +101,12 @@ class InnerDashboardIndex extends Component
         $this->modal = "updateContent";
         $this->dispatchBrowserEvent('show-form');
     }
+
+    public function showVersion()
+    {
+        $this->modal = "version";
+        $this->dispatchBrowserEvent('show-form');
+    }
     // End call Modal
 
 
@@ -155,6 +161,12 @@ class InnerDashboardIndex extends Component
     {
         $this->emit('setContent', $slug);
         $this->UpdateContent();
+    }
+
+    public function getVersion($slug)
+    {
+        $this->emit('showVersion', $slug);
+        $this->showVersion();
     }
 
     // End get Data

@@ -125,7 +125,11 @@
                         <div>{{
                             date('g:i a', strtotime($activity->created_at)); }}
                         </div>
-                        <div>{{ $activity->description }}</div>
+                        <div>{{ $activity->description }} @if (@$activity->getExtraProperty('oldName'))
+                            from <b> {{ $activity->getExtraProperty('oldName') }}</b>
+                            @endif
+                        </div>
+
                     </div>
                     <div class="text-small"> {{ $activity->causer->name }}</div>
                     <div class="d-flex">
